@@ -92,7 +92,7 @@ export default function Navbar() {
 // Navigation dropdown for mobile devices
 function NavigationDropdown() {
   return (
-    <div className="border border-green-600 rounded-xl px-4 py-3 w-min">
+    <div className="bg-white border border-green-600 rounded-xl px-4 py-3 w-min">
       <ul className="space-y-2.5">
         <li>
           <Link href="/">
