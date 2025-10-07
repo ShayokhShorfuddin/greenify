@@ -2,8 +2,7 @@ import URLForm from "./URLForm";
 
 export default function Hero() {
   return (
-    // TODO: remove min-h-screen
-    <section className="min-h-screen">
+    <section>
       <div className="flex flex-col items-center mt-[4rem] xs:mt-[5rem] font-sans">
         <h1 className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl max-w-4xl text-center leading-[1.15] px-5">
           The most <span className="italic text-green-500">complete</span>{" "}
