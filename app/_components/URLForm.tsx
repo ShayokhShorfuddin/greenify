@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { analyzeUrl } from "../actions/analyze";
 
 export default function URLForm() {
   const [url, setUrl] = useState("");
@@ -15,8 +16,14 @@ export default function URLForm() {
       return;
     }
 
-    // Since URL is valid, clear any previous error
-    setError("");
+    // If user left a trailing slash
+    if (url.endsWith("/")) {
+      setError("Please remove trailing slash.");
+      return;
+    }
+
+    // Call the server action to analyze the URL
+    analyzeUrl({ url });
   }
 
   return (
