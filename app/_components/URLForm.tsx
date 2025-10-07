@@ -1,7 +1,8 @@
 "use client";
 
+import { redirect } from "next/navigation";
 import { useState } from "react";
-import { analyzeUrl } from "../actions/analyze";
+import isValidUrl from "../_utils/is-valid-url";
 
 export default function URLForm() {
   const [url, setUrl] = useState("");
@@ -22,8 +23,8 @@ export default function URLForm() {
       return;
     }
 
-    // Call the server action to analyze the URL
-    analyzeUrl({ url });
+    // Finally, redirect to "/" with the url as a query param
+    redirect(`${window.location.origin}/?url=${encodeURIComponent(url)}`);
   }
 
   return (
@@ -51,22 +52,8 @@ export default function URLForm() {
         </button>
       </form>
 
+      {/* In case of any error, show beneath the input field */}
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
-}
-
-// Check if the URL provided by the user is valid or not
-function isValidUrl({ url }: { url: string }) {
-  // If the text is just whitespace/empty
-  if (!url.trim()) {
-    return false;
-  }
-
-  try {
-    const newUrl = new URL(url);
-    return newUrl.protocol === "http:" || newUrl.protocol === "https:";
-  } catch {
-    return false;
-  }
 }

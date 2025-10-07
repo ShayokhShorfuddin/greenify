@@ -1,5 +1,4 @@
 "use server";
-
 import checkIfCarbonTxtExists from "./audits/check-if-carbon-txt-exists";
 
 // Entry point for analyzing a URL
