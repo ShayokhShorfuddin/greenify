@@ -1,6 +1,7 @@
 import formatHttpTime, {
   type Type_formatHttpTime,
 } from "@/app/_utils/format-http-time";
+import logger from "@/logger";
 
 // Response type
 type Type_CheckIfCarbonTxtExists =
@@ -41,16 +42,18 @@ export default async function checkIfCarbonTxtExists({
     // Assuming response is ok && status code is 200-299: Success, file exists
     // Get the last modified header
     const httpTime = response.headers.get("last-modified") as string;
-    console.log(httpTime);
 
     return {
       exists: true,
       lastModified: formatHttpTime({ httpTime }),
       errorOccurred: false,
     };
-  } catch {
-    // TODO: We will call Winston and sentry here
-    // TODO: Call Winston
+  } catch (error) {
+    logger.error(`
+      Received url: ${url}
+      Error occurred while checking for carbon.txt. ${error}`);
+
+    // TODO: Call sentry here
     return {
       errorOccurred: true,
     };
