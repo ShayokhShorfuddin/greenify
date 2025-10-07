@@ -12,7 +12,7 @@ export default function Navbar() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const closeMenuButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Close dropdown when clicking outside
+  // Close dropdown when user clicks outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (

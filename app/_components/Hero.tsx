@@ -1,3 +1,5 @@
+import URLForm from "./URLForm";
+
 export default function Hero() {
   return (
     // TODO: remove min-h-screen
@@ -15,7 +17,7 @@ export default function Hero() {
           Just drop in the link and we will handle the rest.
         </p>
 
-        {/* TODO: Add form */}
+        <URLForm />
       </div>
     </section>
   );
