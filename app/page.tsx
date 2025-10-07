@@ -1,3 +1,4 @@
+import Footer from "./_components/Footer";
 import Hero from "./_components/Hero";
 import Navbar from "./_components/Navbar";
 
@@ -9,6 +10,7 @@ export default function Page() {
       <main>
         <Navbar />
         <Hero />
+        <Footer />
       </main>
 
       {/* Footer will go here */}
