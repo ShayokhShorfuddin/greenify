@@ -7,7 +7,7 @@ export default function NotFound() {
 
   return (
     <main className="flex flex-col h-svh w-full justify-center items-center font-sans">
-      <h1 className="text-2xl xs:text-5xl text-center font-medium text-green-500">
+      <h1 className="text-2xl xs:text-4xl sm:text-5xl text-center font-medium text-green-500">
         Are You Lost?
       </h1>
 

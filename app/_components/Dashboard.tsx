@@ -15,10 +15,11 @@ export default function Dashboard({ url }: { url: string }) {
   }
 
   // TODO: Look into SWR, suspense, loading state, masonry layout, and error handling for the dashboard data fetching
+  // TODO: Add Playwright test
   return (
-    <div>
+    <main>
       <h1>Dashboard</h1>
       <p>Viewing data for URL: {url}</p>
-    </div>
+    </main>
   );
 }

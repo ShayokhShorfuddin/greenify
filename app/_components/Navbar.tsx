@@ -90,6 +90,7 @@ export default function Navbar() {
 }
 
 // Navigation dropdown for mobile devices
+// TODO: Update the links and routes when routes have been created
 function NavigationDropdown() {
   return (
     <div className="bg-white border border-green-600 rounded-xl px-4 py-3 w-min">
