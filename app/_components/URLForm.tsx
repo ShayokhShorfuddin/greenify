@@ -1,12 +1,13 @@
 "use client";
 
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import isValidUrl from "../_utils/is-valid-url";
 
 export default function URLForm() {
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -24,7 +25,7 @@ export default function URLForm() {
     }
 
     // Finally, redirect to "/" with the url as a query param
-    redirect(`${window.location.origin}/?url=${encodeURIComponent(url)}`);
+    router.push(`${window.location.origin}/?url=${encodeURIComponent(url)}`);
   }
 
   return (
