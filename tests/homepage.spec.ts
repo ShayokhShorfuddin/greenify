@@ -56,7 +56,7 @@ test.describe("Homepage tests", () => {
       page.locator("text=Please remove trailing slash."),
     ).toBeVisible();
 
-    // TODO: Finally, test a valid URL submission
+    // Finally, test a valid URL submission
     // https://example.com -> no trailing slash
     await page.getByRole("textbox").fill("https://example.com");
     await page.click("button[type='submit']");
