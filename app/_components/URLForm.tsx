@@ -36,6 +36,7 @@ export default function URLForm() {
       >
         <input
           type="text"
+          maxLength={2000} // Set a reasonable max length for URLs. Prevents abuse.
           // Update the URL state and clear error on change
           onChange={(e) => {
             setUrl(e.target.value);

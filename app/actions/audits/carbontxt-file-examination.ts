@@ -1,10 +1,7 @@
-import formatHttpTime, {
-  type Type_formatHttpTime,
-} from "@/app/_utils/format-http-time";
 import logger from "@/logger";
 
 // Response type
-type Type_CheckIfCarbonTxtExists =
+export type Type_ExamineCarbonTxtFile =
   | {
       errorOccurred: true;
     }
@@ -14,22 +11,23 @@ type Type_CheckIfCarbonTxtExists =
     }
   | {
       exists: true;
-      lastModified: Type_formatHttpTime;
       errorOccurred: false;
     };
 
 // Check if the site has a carbon.txt file or not
-export default async function checkIfCarbonTxtExists({
+export async function examineCarbonTxtFile({
   url,
 }: {
   url: string;
-}): Promise<Type_CheckIfCarbonTxtExists> {
+}): Promise<Type_ExamineCarbonTxtFile> {
   try {
-    // Make a HEAD request to check if carbon.txt exists
+    // Make a GET request to check if carbon.txt exists and get its content
     const response = await fetch(`${url}/carbon.txt`, {
-      method: "HEAD",
+      method: "GET",
       cache: "no-store",
     });
+
+    console.log(response);
 
     // Not found
     if (!response.ok && response.status === 404) {
@@ -40,12 +38,18 @@ export default async function checkIfCarbonTxtExists({
     }
 
     // Assuming response is ok && status code is 200-299: Success, file exists
-    // Get the last modified header
-    const httpTime = response.headers.get("last-modified") as string;
+    // Get the content of the file
+    const content = await response.text();
 
+    // Simulate processing time
+    // TODO: Remove this when done
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    // TODO: Do all necessary parsing and validation of the file content here
+
+    // TODO: Update our return type accordingly and return parsed results
     return {
       exists: true,
-      lastModified: formatHttpTime({ httpTime }),
       errorOccurred: false,
     };
   } catch (error) {
