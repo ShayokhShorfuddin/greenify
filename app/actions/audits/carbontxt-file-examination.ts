@@ -10,17 +10,24 @@ export type Type_ExamineCarbonTxtFile =
       errorOccurred: true;
     }
   | {
+      reachable: false;
+      errorOccurred: false;
+    }
+  | {
       exists: false;
+      reachable: true;
       errorOccurred: false;
     }
   | {
       exists: true;
+      reachable: true;
       isMissing: true;
       missing: string[];
       errorOccurred: false;
     }
   | {
       exists: true;
+      reachable: true;
       isMissing: false;
       errorOccurred: false;
       disclosureUrlStatuses: Type_DisclosureUrlStatus[];
@@ -39,12 +46,21 @@ export async function examineCarbonTxtFile({
       cache: "no-store",
     });
 
-    // Not found
-    if (!response.ok && response.status === 404) {
-      return {
-        exists: false,
-        errorOccurred: false,
-      };
+    if (!response.ok) {
+      // Not found
+      if (response.status === 404) {
+        return {
+          exists: false,
+          reachable: true,
+          errorOccurred: false,
+        };
+      } else {
+        // For any other response status, we consider the file unreachable from our system
+        return {
+          reachable: false,
+          errorOccurred: false,
+        };
+      }
     }
 
     // Assuming response is ok && status code is 200-299: Success, file exists
@@ -59,6 +75,7 @@ export async function examineCarbonTxtFile({
     if (!result.success) {
       return {
         exists: true,
+        reachable: true,
         isMissing: true,
         missing: result.missing,
         errorOccurred: false,
@@ -67,6 +84,7 @@ export async function examineCarbonTxtFile({
 
     return {
       exists: true,
+      reachable: true,
       isMissing: false,
       errorOccurred: false,
       disclosureUrlStatuses: result.disclosureUrlStatuses,

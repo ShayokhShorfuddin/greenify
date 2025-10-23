@@ -21,6 +21,16 @@ export default async function CarbonTxtCardContent({ url }: { url: string }) {
     );
   }
 
+  // If we could not reach the carbon.txt file (server could be down)
+  if (results.reachable === false) {
+    return (
+      <p className="text-sm mt-1 text-red-500">
+        Unable to reach carbon.txt file. Check if the site is online and the
+        file is accessible.
+      </p>
+    );
+  }
+
   return (
     <>
       {/* Existence */}
