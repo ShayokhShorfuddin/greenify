@@ -1,6 +1,6 @@
 import logger from "@/logger";
 
-export type Type_PingResult =
+type Type_PingResult =
   | {
       errorOccurred: true;
     }

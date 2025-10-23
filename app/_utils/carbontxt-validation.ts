@@ -1,16 +1,32 @@
-type Type_ValidateCarbonTxtResult = {
-  success: boolean;
-  disclosureUrls: string[];
-};
+import { pingUrl } from "./ping";
 
-// TODO: We need heavy Jest tests for this function
+export type Type_DisclosureUrlStatus =
+  | {
+      errorOccurred: true;
+      url: string;
+    }
+  | {
+      errorOccurred: false;
+      url: string;
+      status: number;
+    };
+
+type Type_ValidateCarbonTxtResult =
+  | {
+      success: false;
+      missing: string[]; // Turns out, GWF doesn't really care whether we have the upstream table and services array or not in the carbon.txt file. It only throws syntax error when [org] table or disclosures array is missing. In future, they may or may not change this behavior or may introduce new table/arrays which are required. So, we simply list the missing fields.
+    }
+  | {
+      success: true;
+      disclosureUrlStatuses: Type_DisclosureUrlStatus[];
+    };
+
 export async function validateCarbonTxt({
   content,
 }: {
   content: string;
 }): Promise<Type_ValidateCarbonTxtResult> {
   // First, we need to send a POST request to the official GWF validator
-  console.log(content);
   const response = await fetch(
     "https://carbontxt.org/tools/validator?/validate",
     {
@@ -22,7 +38,7 @@ export async function validateCarbonTxt({
   );
 
   const result = await response.json();
-  // biome-ignore lint/suspicious/noExplicitAny: <Since are not sure of the Response structure, we have to use any>
+  // biome-ignore lint/suspicious/noExplicitAny: <Since we are not sure of the Response structure, we have to use any>
   const parsedData: any[] = JSON.parse(result.data);
 
   // Extract success status
@@ -30,6 +46,24 @@ export async function validateCarbonTxt({
   const success = responseObject?.success
     ? parsedData[responseObject.success]
     : false;
+
+  // If validation failed, extract errors
+  if (!success && responseObject?.errors) {
+    const errorIndices = parsedData[responseObject.errors];
+
+    const missingArray: string[] = [];
+
+    for (const errorIndex of errorIndices) {
+      const errorObject = parsedData[errorIndex];
+      const locIndices = parsedData[errorObject.loc];
+
+      for (const locIndex of locIndices) {
+        missingArray.push(parsedData[locIndex]);
+      }
+    }
+
+    return { success, missing: missingArray };
+  }
 
   // Extract disclosure URLs
   const dataObject = parsedData[responseObject?.data];
@@ -40,13 +74,24 @@ export async function validateCarbonTxt({
 
   const disclosureUrls = disclosuresObject
     ? disclosuresObject.map((index: number) => {
-        console.log("Disclosure Index:", index);
         const disclosure = parsedData[index];
         return parsedData[disclosure.url];
       })
     : [];
 
-  return { success, disclosureUrls };
+  const disclosureUrlStatuses = await Promise.all(
+    disclosureUrls.map(async (url: string) => {
+      const pingResult = await pingUrl(url);
+
+      if (pingResult.errorOccurred) {
+        return { errorOccurred: true, url };
+      }
+
+      return { errorOccurred: false, url, status: pingResult.status };
+    }),
+  );
+
+  return { success, disclosureUrlStatuses };
 }
 
 // Reference

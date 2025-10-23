@@ -22,7 +22,6 @@ export default function Dashboard({ url }: { url: string }) {
 
       {/* Container of all dashboard components */}
       <section className="grid grid-cols-4 grid-rows-1 gap-5 mt-[2rem] px-[1.2rem] font-sans">
-        {/* TODO: Get data from action and pass it to the component */}
         <CarbonTxtCard url={url} />
       </section>
     </main>

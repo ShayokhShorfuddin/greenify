@@ -12,8 +12,6 @@ export default async function CarbonTxtCardContent({ url }: { url: string }) {
     url,
   });
 
-  console.log(results);
-
   // If we have received any error from the audit action
   if (results.errorOccurred) {
     return (
@@ -42,9 +40,9 @@ export default async function CarbonTxtCardContent({ url }: { url: string }) {
 
       {/* Since the file exists, we can show more information */}
 
-      {/* Syntax validation */}
+      {/* Validate if anything is missing or not */}
       <div className="flex items-center gap-2 mt-1">
-        {results.exists && results.syntaxError ? (
+        {results.exists && results.isMissing ? (
           <>
             <p className="text-sm text-neutral-500">Invalid syntax.</p>
             <Image src={cross} alt="Cross" className="size-3" />
@@ -57,62 +55,67 @@ export default async function CarbonTxtCardContent({ url }: { url: string }) {
         )}
       </div>
 
-      {results.exists && results.syntaxError && (
-        <p className="text-sm text-red-500">{results.syntaxErrorMessage}</p>
+      {/* Divider */}
+      <hr className="w-full mt-2 border-neutral-200" />
+
+      {results.exists && results.isMissing && (
+        <div>
+          <p className="text-sm text-neutral-500 mt-1">Missing field:</p>
+
+          <p className="text-sm text-neutral-500 mt-1">
+            {results.missing.map((field, idx, arr) => (
+              <span key={field} className="inline-flex items-center">
+                <span
+                  className={
+                    idx === arr.length - 1 ? "text-red-500" : "text-neutral-500"
+                  }
+                >
+                  {field}
+                </span>
+
+                {idx < arr.length - 1 && <span className="mx-1">{">"}</span>}
+              </span>
+            ))}
+          </p>
+        </div>
       )}
 
-      {/* Missing things */}
+      {/* Disclosure URL statuses */}
+      {results.exists && !results.isMissing && (
+        <div>
+          <p className="text-sm font-medium text-neutral-600 mt-2">
+            Disclosures
+          </p>
 
-      {/* Org table is missing */}
-      {results.exists && !results.syntaxError && !results.isOrgTablePresent && (
-        <p className="text-sm text-red-500">[org] table is missing.</p>
+          {results.disclosureUrlStatuses.map((disclosure, idx) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: <We won't reorder or modify this list>
+            <div className="flex items-center" key={idx}>
+              <p
+                className="text-sm text-neutral-500 truncate pr-6"
+                title={disclosure.url}
+              >
+                {disclosure.url}
+              </p>
+
+              <small
+                className={`${
+                  disclosure.errorOccurred
+                    ? "text-red-500"
+                    : disclosure.status >= 200 && disclosure.status < 300
+                      ? "text-green-500"
+                      : disclosure.status >= 300 && disclosure.status < 400
+                        ? "text-yellow-500"
+                        : disclosure.status >= 400 && disclosure.status < 500
+                          ? "text-red-500"
+                          : "text-neutral-500"
+                } text-[12px]`}
+              >
+                {disclosure.errorOccurred ? "Failed" : disclosure.status}
+              </small>
+            </div>
+          ))}
+        </div>
       )}
-
-      {/* Upstream table is missing */}
-      {results.exists &&
-        !results.syntaxError &&
-        !results.isUpstreamTablePresent && (
-          <p className="text-sm text-red-500">[upstream] table is missing.</p>
-        )}
-
-      {/* Disclosures array is missing */}
-      {results.exists &&
-        !results.syntaxError &&
-        !results.isDisclosuresArrayPresent && (
-          <p className="text-sm text-red-500">disclosures array is missing.</p>
-        )}
-
-      {/* services array is missing */}
-      {results.exists &&
-        !results.syntaxError &&
-        !results.isServicesArrayPresent && (
-          <p className="text-sm text-red-500">services array is missing.</p>
-        )}
-
-      {/* List disclosures information */}
-      <p className="text-sm text-neutral-700 font-medium mt-2">Disclosures</p>
-
-      <div>
-        {results.exists &&
-          !results.syntaxError &&
-          results.isDisclosuresArrayPresent &&
-          results.disclosuresInformation.map((disclosure, index) =>
-            disclosure.errorOccurred ? (
-              // biome-ignore lint/suspicious/noArrayIndexKey: <We won't reorder>
-              <div key={index} className="flex items-center ml-2">
-                <p>Error occurred</p>
-              </div>
-            ) : (
-              // biome-ignore lint/suspicious/noArrayIndexKey: <We won't reorder>
-              <div key={index} className="flex items-center">
-                {/* <p className="">{disclosure.url}</p> */}
-                {/* TODO: Fix overflowing text */}
-                <p className="">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
-                {/* <p>{disclosure.status}</p> */}
-              </div>
-            ),
-          )}
-      </div>
 
       {/* carbon.txt file URL */}
       <Link
@@ -120,7 +123,7 @@ export default async function CarbonTxtCardContent({ url }: { url: string }) {
         target="_blank"
         className="text-sm text-blue-400 underline"
       >
-        <p className="mt-1 text-sm">{`${url}/carbon.txt`}</p>
+        <p className="mt-2 text-sm break-words overflow-hidden">{`${url}/carbon.txt`}</p>
       </Link>
     </>
   );
