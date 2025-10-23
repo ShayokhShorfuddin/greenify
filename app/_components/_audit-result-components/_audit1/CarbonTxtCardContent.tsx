@@ -7,7 +7,7 @@ import {
 import cross from "@/public/svgs/cross.svg";
 import green_tick from "@/public/svgs/green-tick.svg";
 
-export default async function CarbonTxtCardContent({ url }: { url: string }) {
+export async function CarbonTxtCardContent({ url }: { url: string }) {
   const results: Type_ExamineCarbonTxtFile = await examineCarbonTxtFile({
     url,
   });
@@ -128,12 +128,8 @@ export default async function CarbonTxtCardContent({ url }: { url: string }) {
       )}
 
       {/* carbon.txt file URL */}
-      <Link
-        href={`${url}/carbon.txt`}
-        target="_blank"
-        className="text-sm text-blue-400 underline"
-      >
-        <p className="mt-2 text-sm break-words overflow-hidden">{`${url}/carbon.txt`}</p>
+      <Link href={`${url}/carbon.txt`} target="_blank">
+        <p className="mt-2 text-sm text-blue-500 underline break-words overflow-hidden">{`${url}/carbon.txt`}</p>
       </Link>
     </>
   );

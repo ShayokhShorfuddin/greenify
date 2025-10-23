@@ -1,6 +1,8 @@
 import { Suspense } from "react";
-import CarbonTxtCardContent from "./CarbonTxtCardContent";
-import CarbonTxtCardSkeleton from "./CarbonTxtCardSkeleton";
+import { CarbonTxtCardContent } from "./CarbonTxtCardContent";
+import { CarbonTxtCardSkeleton } from "./CarbonTxtCardSkeleton";
+
+("./CarbonTxtCardSkeleton");
 
 export default async function CarbonTxtCard({ url }: { url: string }) {
   return (
