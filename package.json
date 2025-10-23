@@ -9,6 +9,7 @@
     "lint": "biome check",
     "format": "biome format --write",
     "test": "jest",
+    "playwright": "npx playwright test",
     "knip": "npx knip"
   },
   "dependencies": {

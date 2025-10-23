@@ -38,22 +38,22 @@ export default async function CarbonTxtCardContent({ url }: { url: string }) {
         )}
       </div>
 
-      {/* Since the file exists, we can show more information */}
-
       {/* Validate if anything is missing or not */}
-      <div className="flex items-center gap-2 mt-1">
-        {results.exists && results.isMissing ? (
-          <>
-            <p className="text-sm text-neutral-500">Invalid syntax.</p>
-            <Image src={cross} alt="Cross" className="size-3" />
-          </>
-        ) : (
-          <>
-            <p className="text-sm text-neutral-500">Valid syntax.</p>
-            <Image src={green_tick} alt="Green tick" className="size-3" />
-          </>
-        )}
-      </div>
+      {results.exists && (
+        <div className="flex items-center gap-2 mt-1">
+          {results.isMissing ? (
+            <>
+              <p className="text-sm text-neutral-500">Invalid syntax.</p>
+              <Image src={cross} alt="Cross" className="size-3" />
+            </>
+          ) : (
+            <>
+              <p className="text-sm text-neutral-500">Valid syntax.</p>
+              <Image src={green_tick} alt="Green tick" className="size-3" />
+            </>
+          )}
+        </div>
+      )}
 
       {/* Divider */}
       <hr className="w-full mt-2 border-neutral-200" />

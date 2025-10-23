@@ -27,5 +27,3 @@ export default function Dashboard({ url }: { url: string }) {
     </main>
   );
 }
-
-// TODO: Look into SWR (SWR is for client-component only btw), suspense, loading state, masonry layout, and error handling for the dashboard data fetching
