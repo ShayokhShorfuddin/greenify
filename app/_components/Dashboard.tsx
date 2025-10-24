@@ -1,6 +1,7 @@
 import isValidUrl from "../_utils/is-valid-url";
 import CarbonTxtCard from "./_audit-result-components/_audit1/CarbonTxtCard";
 import GreenHostCard from "./_audit-result-components/_audit2/GreenHostCard";
+import IPToCo2IntensityCard from "./_audit-result-components/_audit3/IPToCo2IntensityCard";
 import InvalidUrl from "./_dashboard-components/InvalidUrl";
 
 export default function Dashboard({ url }: { url: string }) {
@@ -25,6 +26,7 @@ export default function Dashboard({ url }: { url: string }) {
       <section className="grid grid-cols-4 grid-rows-1 gap-5 mt-[2rem] px-[1.2rem] font-sans">
         <CarbonTxtCard url={url} />
         <GreenHostCard url={url} />
+        <IPToCo2IntensityCard url={url} />
       </section>
     </main>
   );

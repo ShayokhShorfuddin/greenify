@@ -30,7 +30,6 @@ export async function GreenHostCardContent({ url }: { url: string }) {
       },
     );
 
-    // TODO: Check if the API is down or not
     if (!response.ok) {
       logger.error(`GWF API is responded not ok: ${response}`);
       return (
@@ -46,7 +45,8 @@ export async function GreenHostCardContent({ url }: { url: string }) {
 
     return (
       <p className="text-sm mt-1 text-red-500">
-        Failed to perform audit. We are investigating the issue.
+        Failed to perform audit. We are investigating the issue. Try rechecking
+        the url.
       </p>
     );
   }
@@ -92,7 +92,7 @@ export async function GreenHostCardContent({ url }: { url: string }) {
                 {result.supporting_documents.map((document, index) => (
                   // biome-ignore lint/suspicious/noArrayIndexKey: <We wont be reordering this list>
                   <div key={index}>
-                    <p>{document.title}</p>
+                    <p className="text-neutral-700">{document.title}</p>
 
                     <Link href={document.link} target="_blank">
                       <p className="mt-1 text-blue-500 underline truncate">

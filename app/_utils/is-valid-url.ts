@@ -5,10 +5,9 @@ export default function isValidUrl({ url }: { url: string }) {
     return false;
   }
 
-  try {
-    const newUrl = new URL(url);
-    return newUrl.protocol === "http:" || newUrl.protocol === "https:";
-  } catch {
-    return false;
-  }
+  const result = url.match(
+    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
+  );
+
+  return result !== null;
 }

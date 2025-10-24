@@ -16,7 +16,8 @@ export async function CarbonTxtCardContent({ url }: { url: string }) {
   if (results.errorOccurred) {
     return (
       <p className="text-sm mt-1 text-red-500">
-        Failed to perform audit. We are investigating the issue.
+        Failed to perform audit. We are investigating the issue. Try rechecking
+        the url.
       </p>
     );
   }
