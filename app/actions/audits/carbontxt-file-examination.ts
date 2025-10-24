@@ -8,15 +8,18 @@ import logger from "@/logger";
 export type Type_ExamineCarbonTxtFile =
   | {
       errorOccurred: true;
+      kind: "ExamineCarbonTxtFile";
     }
   | {
       reachable: false;
       errorOccurred: false;
+      kind: "ExamineCarbonTxtFile";
     }
   | {
       exists: false;
       reachable: true;
       errorOccurred: false;
+      kind: "ExamineCarbonTxtFile";
     }
   | {
       exists: true;
@@ -24,12 +27,14 @@ export type Type_ExamineCarbonTxtFile =
       isMissing: true;
       missing: string[];
       errorOccurred: false;
+      kind: "ExamineCarbonTxtFile";
     }
   | {
       exists: true;
       reachable: true;
       isMissing: false;
       errorOccurred: false;
+      kind: "ExamineCarbonTxtFile";
       disclosureUrlStatuses: Type_DisclosureUrlStatus[];
     };
 
@@ -53,12 +58,14 @@ export async function examineCarbonTxtFile({
           exists: false,
           reachable: true,
           errorOccurred: false,
+          kind: "ExamineCarbonTxtFile",
         };
       } else {
         // For any other response status, we consider the file unreachable from our system
         return {
           reachable: false,
           errorOccurred: false,
+          kind: "ExamineCarbonTxtFile",
         };
       }
     }
@@ -79,6 +86,7 @@ export async function examineCarbonTxtFile({
         isMissing: true,
         missing: result.missing,
         errorOccurred: false,
+        kind: "ExamineCarbonTxtFile",
       };
     }
 
@@ -87,6 +95,7 @@ export async function examineCarbonTxtFile({
       reachable: true,
       isMissing: false,
       errorOccurred: false,
+      kind: "ExamineCarbonTxtFile",
       disclosureUrlStatuses: result.disclosureUrlStatuses,
     };
   } catch (error) {
@@ -97,6 +106,7 @@ export async function examineCarbonTxtFile({
     // TODO: Call sentry here
     return {
       errorOccurred: true,
+      kind: "ExamineCarbonTxtFile",
     };
   }
 }

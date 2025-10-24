@@ -4,7 +4,7 @@ import { GreenHostCardSkeleton } from "./GreenHostCardSkeleton";
 
 export default async function GreenHostCard({ url }: { url: string }) {
   return (
-    <div className="bg-audit-card-background border border-audit-card-border rounded-lg p-3">
+    <div className="relative bg-audit-card-background border border-audit-card-border rounded-lg p-3">
       {/* Audit number */}
       <small className="text-neutral-700 font-mono">Audit #2</small>
       <p className="text-[15px]">Green host detection.</p>

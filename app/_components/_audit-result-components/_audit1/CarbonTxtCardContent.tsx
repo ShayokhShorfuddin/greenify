@@ -1,11 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import { copyableText } from "@/app/_utils/copyable-text";
 import {
   examineCarbonTxtFile,
   type Type_ExamineCarbonTxtFile,
 } from "@/app/actions/audits/carbontxt-file-examination";
 import cross from "@/public/svgs/cross.svg";
 import green_tick from "@/public/svgs/green-tick.svg";
+import { CarbonTxtIsNotReachableText, ErrorOccurredText } from "@/shared/texts";
+import { CopyToClipboardButton } from "../CopyToClipboardButton";
 
 export async function CarbonTxtCardContent({ url }: { url: string }) {
   const results: Type_ExamineCarbonTxtFile = await examineCarbonTxtFile({
@@ -14,26 +17,20 @@ export async function CarbonTxtCardContent({ url }: { url: string }) {
 
   // If we have received any error from the audit action
   if (results.errorOccurred) {
-    return (
-      <p className="text-sm mt-1 text-red-500">
-        Failed to perform audit. We are investigating the issue. Try rechecking
-        the url.
-      </p>
-    );
+    return <p className="text-sm mt-1 text-red-500">{ErrorOccurredText}</p>;
   }
 
   // If we could not reach the carbon.txt file (server could be down)
   if (results.reachable === false) {
     return (
-      <p className="text-sm mt-1 text-red-500">
-        Unable to reach carbon.txt file. Check if the site is online and the
-        file is accessible.
-      </p>
+      <p className="text-sm mt-1 text-red-500">{CarbonTxtIsNotReachableText}</p>
     );
   }
 
   return (
     <>
+      <CopyToClipboardButton text={copyableText({ url, result: results })} />
+
       {/* Existence */}
       <div className="flex items-center gap-2 mt-1">
         {results.exists ? (

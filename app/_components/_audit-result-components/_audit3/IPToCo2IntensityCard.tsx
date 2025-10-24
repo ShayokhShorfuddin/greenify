@@ -4,7 +4,7 @@ import { IPToCo2IntensityCardSkeleton } from "./IPToCo2IntensityCardSkeleton";
 
 export default async function IPToCo2Intensity({ url }: { url: string }) {
   return (
-    <div className="bg-audit-card-background border border-audit-card-border rounded-lg p-3">
+    <div className="relative bg-audit-card-background border border-audit-card-border rounded-lg p-3">
       {/* Audit number */}
       <small className="text-neutral-700 font-mono">Audit #3</small>
       <p className="text-[15px]">

@@ -1,15 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import { copyableText } from "@/app/_utils/copyable-text";
 import logger from "@/logger";
 import cross from "@/public/svgs/cross.svg";
 import green_tick from "@/public/svgs/green-tick.svg";
+import { ErrorOccurredText, FailedToReachAPIText } from "@/shared/texts";
+import { CopyToClipboardButton } from "../CopyToClipboardButton";
 
-type Type_APIResponse =
-  | { green: false }
+export type Type_GreenHostAPIResponse =
+  | { green: false; kind: "GreenHostAPIResponse" }
   | {
       green: true;
       hosted_by: string;
       hosted_by_website: string;
+      kind: "GreenHostAPIResponse";
 
       supporting_documents: {
         title: string;
@@ -18,7 +22,7 @@ type Type_APIResponse =
     };
 
 export async function GreenHostCardContent({ url }: { url: string }) {
-  let result: Type_APIResponse;
+  let result: Type_GreenHostAPIResponse;
 
   try {
     // Get hostname (required by the API)
@@ -33,26 +37,25 @@ export async function GreenHostCardContent({ url }: { url: string }) {
     if (!response.ok) {
       logger.error(`GWF API is responded not ok: ${response}`);
       return (
-        <p className="text-sm mt-1 text-red-500">
-          Failed to reach API. Try again later.
-        </p>
+        <p className="text-sm mt-1 text-red-500">{FailedToReachAPIText}</p>
       );
     }
 
-    result = (await response.json()) as Type_APIResponse;
+    const apiResponse = await response.json();
+    result = {
+      ...apiResponse,
+      kind: "GreenHostAPIResponse",
+    } as Type_GreenHostAPIResponse;
   } catch (error) {
     logger.error(`Failed while fetching green host data: ${error}`);
 
-    return (
-      <p className="text-sm mt-1 text-red-500">
-        Failed to perform audit. We are investigating the issue. Try rechecking
-        the url.
-      </p>
-    );
+    return <p className="text-sm mt-1 text-red-500">{ErrorOccurredText}</p>;
   }
 
   return (
     <>
+      <CopyToClipboardButton text={copyableText({ url, result })} />
+
       <div className="flex items-center gap-2 mt-1">
         {result.green ? (
           <>
