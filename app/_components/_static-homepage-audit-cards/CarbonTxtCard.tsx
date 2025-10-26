@@ -18,8 +18,7 @@ Disclosures:
   - https://www.techcarbonstandard.org/case-studies/green-web-foundation/overview: 200
   - https://www.thegreenwebfoundation.org/.well-known/tcs.json: 200
 
-URL: https://www.thegreenwebfoundation.org/carbon.txt
-        `}
+URL: https://www.thegreenwebfoundation.org/carbon.txt`}
       />
 
       {/* Existence */}

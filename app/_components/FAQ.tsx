@@ -33,7 +33,7 @@ const information = [
 
 export default function FAQ() {
   return (
-    <section className="flex justify-center mt-[3rem] font-sans">
+    <section className="flex justify-center mt-[7rem] font-sans">
       <div className="relative w-full max-w-[46rem] px-5">
         <p className="text-base sm:text-xl font-medium">
           Frequently Asked Questions.
