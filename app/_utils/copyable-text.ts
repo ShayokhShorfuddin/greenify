@@ -34,7 +34,7 @@ function generateTextForIPToCo2IntensityAPIResponse({
   result: Type_IPToCo2IntensityAPIResponse;
 }): string {
   return `Country: ${result.country_name}
-Intensity: ${result.carbon_intensity} g/kWh
+Intensity: ${result.carbon_intensity} gCO2eq/kWh.
 Intensity type: ${
     result.carbon_intensity_type.charAt(0).toUpperCase() +
     result.carbon_intensity_type.slice(1)

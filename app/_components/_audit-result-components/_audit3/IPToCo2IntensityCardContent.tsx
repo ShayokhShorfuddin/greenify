@@ -82,7 +82,7 @@ export async function IPToCo2IntensityCardContent({ url }: { url: string }) {
           )}
         </div>
 
-        <p className="mt-1">Intensity: {result.carbon_intensity} g/kWh.</p>
+        <p className="mt-1">Intensity: {result.carbon_intensity} gCO2eq/kWh.</p>
         <p className="mt-1">
           Intensity type:{" "}
           {result.carbon_intensity_type.charAt(0).toUpperCase() +

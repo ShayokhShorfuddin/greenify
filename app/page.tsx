@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { CarbonTxtSupport } from "./_components/CarbonTxtSupport";
 import Dashboard from "./_components/Dashboard";
 import FAQ from "./_components/FAQ";
 import Hero from "./_components/Hero";
+import { Insight } from "./_components/Insights";
 
 // Dynamically generate metadata based on the presence of the `url` search parameter.
 export async function generateMetadata({
@@ -37,7 +39,8 @@ export default async function Page({
     return (
       <main>
         <Hero />
-
+        <Insight />
+        <CarbonTxtSupport />
         <FAQ />
       </main>
     );

@@ -10,13 +10,14 @@ export default function Hero() {
           planet <span className="green_underlined">Earth</span>.
         </h1>
 
+        {/*TODO: Since we are going telemetry mode, change subheading */}
         <p className="text-sm mt-5 sm:mt-7 text-neutral-700 text-center xs:text-base max-w-xl px-5">
           Build a web that's as clean as it is fast. Get a comprehensive carbon
           footprint analysis and report for any active website on the internet.
           Just drop in the link and we will handle the rest.
         </p>
 
-        <URLForm />
+        {/* <URLForm /> */}
       </div>
     </section>
   );

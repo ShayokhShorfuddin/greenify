@@ -17,7 +17,7 @@ const information = [
   {
     header: "Are the generated results stored or shared?",
     content:
-      "We only cache successful audit's results in our backend for 6 hours in order to prevent API abuse and server exhaustion. If you would like to save an audit result temporarily, we offer you an option to save upto 5 results in your browser. Except for that, we do not store or share any of the generated results.",
+      "We only cache successful audit's results in our backend for 2 hours in order to prevent API abuse and server exhaustion. If you would like to save an audit result temporarily, we offer you an option to save upto 5 results in your browser. Except for that, we do not store or share any of the generated results.",
   },
   {
     header: "There are existing solutions out there. Why another one?",

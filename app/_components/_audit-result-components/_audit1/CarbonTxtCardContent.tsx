@@ -33,33 +33,29 @@ export async function CarbonTxtCardContent({ url }: { url: string }) {
 
       {/* Existence */}
       <div className="flex items-center gap-2 mt-1">
-        {results.exists ? (
-          <>
-            <p className="text-sm text-neutral-500">File exists.</p>
-            <Image src={green_tick} alt="Green tick" className="size-3" />
-          </>
-        ) : (
-          <>
-            <p className="text-sm text-neutral-500">File doesn't exist.</p>
-            <Image src={cross} alt="Cross" className="size-3" />
-          </>
-        )}
+        <p className="text-sm text-neutral-500">
+          {results.exists ? "File exists." : "File doesn't exist."}
+        </p>
+
+        <Image
+          src={results.exists ? green_tick : cross}
+          alt={results.exists ? "Green tick" : "Cross"}
+          className="size-3"
+        />
       </div>
 
       {/* Validate if anything is missing or not */}
       {results.exists && (
         <div className="flex items-center gap-2 mt-1">
-          {results.isMissing ? (
-            <>
-              <p className="text-sm text-neutral-500">Invalid syntax.</p>
-              <Image src={cross} alt="Cross" className="size-3" />
-            </>
-          ) : (
-            <>
-              <p className="text-sm text-neutral-500">Valid syntax.</p>
-              <Image src={green_tick} alt="Green tick" className="size-3" />
-            </>
-          )}
+          <p className="text-sm text-neutral-500">
+            {results.isMissing ? "Invalid syntax." : "Valid syntax."}
+          </p>
+
+          <Image
+            src={results.isMissing ? cross : green_tick}
+            alt={results.isMissing ? "Cross" : "Green tick"}
+            className="size-3"
+          />
         </div>
       )}
 
