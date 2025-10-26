@@ -1,3 +1,4 @@
+import logger from "@/logger";
 import { pingUrl } from "./ping";
 
 export type Type_DisclosureUrlStatus =
@@ -13,11 +14,16 @@ export type Type_DisclosureUrlStatus =
 
 type Type_ValidateCarbonTxtResult =
   | {
+      errorOccurred: true;
+    }
+  | {
       success: false;
       missing: string[]; // Turns out, GWF doesn't really care whether we have the upstream table and services array or not in the carbon.txt file. It only throws syntax error when [org] table or disclosures array is missing. In future, they may or may not change this behavior or may introduce new table/arrays which are required. So, we simply list the missing fields.
+      errorOccurred: false;
     }
   | {
       success: true;
+      errorOccurred: false;
       disclosureUrlStatuses: Type_DisclosureUrlStatus[];
     };
 
@@ -26,72 +32,80 @@ export async function validateCarbonTxt({
 }: {
   content: string;
 }): Promise<Type_ValidateCarbonTxtResult> {
-  // First, we need to send a POST request to the official GWF validator
-  const response = await fetch(
-    "https://carbontxt.org/tools/validator?/validate",
-    {
-      method: "POST",
-      body: new URLSearchParams({
-        "carbon-txt-validator": content,
-      }),
-    },
-  );
+  try {
+    // First, we need to send a POST request to the official GWF validator
+    const response = await fetch(
+      "https://carbontxt.org/tools/validator?/validate",
+      {
+        method: "POST",
+        body: new URLSearchParams({
+          "carbon-txt-validator": content,
+        }),
+      },
+    );
 
-  const result = await response.json();
-  // biome-ignore lint/suspicious/noExplicitAny: <Since we are not sure of the Response structure, we have to use any>
-  const parsedData: any[] = JSON.parse(result.data);
+    const result = await response.json();
 
-  // Extract success status
-  const responseObject = parsedData[2];
-  const success = responseObject?.success
-    ? parsedData[responseObject.success]
-    : false;
+    // biome-ignore lint/suspicious/noExplicitAny: <Since we are not sure of the Response structure, we have to use any>
+    const parsedData: any[] = JSON.parse(result.data);
 
-  // If validation failed, extract errors
-  if (!success && responseObject?.errors) {
-    const errorIndices = parsedData[responseObject.errors];
+    // Extract success status
+    const responseObject = parsedData[2];
+    const success = responseObject?.success
+      ? parsedData[responseObject.success]
+      : false;
 
-    const missingArray: string[] = [];
+    // If validation failed, extract errors
+    if (!success && responseObject?.errors) {
+      const errorIndices = parsedData[responseObject.errors];
 
-    for (const errorIndex of errorIndices) {
-      const errorObject = parsedData[errorIndex];
-      const locIndices = parsedData[errorObject.loc];
+      const missingArray: string[] = [];
 
-      for (const locIndex of locIndices) {
-        missingArray.push(parsedData[locIndex]);
+      for (const errorIndex of errorIndices) {
+        const errorObject = parsedData[errorIndex];
+        const locIndices = parsedData[errorObject.loc];
+
+        for (const locIndex of locIndices) {
+          missingArray.push(parsedData[locIndex]);
+        }
       }
+
+      return { success, missing: missingArray, errorOccurred: false };
     }
 
-    return { success, missing: missingArray };
+    // Extract disclosure URLs
+    const dataObject = parsedData[responseObject?.data];
+    const orgObject = dataObject?.org ? parsedData[dataObject.org] : null;
+    const disclosuresObject = orgObject?.disclosures
+      ? parsedData[orgObject.disclosures]
+      : null;
+
+    const disclosureUrls = disclosuresObject
+      ? disclosuresObject.map((index: number) => {
+          const disclosure = parsedData[index];
+          return parsedData[disclosure.url];
+        })
+      : [];
+
+    const disclosureUrlStatuses = await Promise.all(
+      disclosureUrls.map(async (url: string) => {
+        const pingResult = await pingUrl(url);
+
+        if (pingResult.errorOccurred) {
+          return { errorOccurred: true, url };
+        }
+
+        return { errorOccurred: false, url, status: pingResult.status };
+      }),
+    );
+
+    return { success, disclosureUrlStatuses, errorOccurred: false };
+  } catch (error) {
+    logger.error(
+      `Error on carbontxt-validation.ts: ${(error as Error).message}`,
+    );
+    return { errorOccurred: true };
   }
-
-  // Extract disclosure URLs
-  const dataObject = parsedData[responseObject?.data];
-  const orgObject = dataObject?.org ? parsedData[dataObject.org] : null;
-  const disclosuresObject = orgObject?.disclosures
-    ? parsedData[orgObject.disclosures]
-    : null;
-
-  const disclosureUrls = disclosuresObject
-    ? disclosuresObject.map((index: number) => {
-        const disclosure = parsedData[index];
-        return parsedData[disclosure.url];
-      })
-    : [];
-
-  const disclosureUrlStatuses = await Promise.all(
-    disclosureUrls.map(async (url: string) => {
-      const pingResult = await pingUrl(url);
-
-      if (pingResult.errorOccurred) {
-        return { errorOccurred: true, url };
-      }
-
-      return { errorOccurred: false, url, status: pingResult.status };
-    }),
-  );
-
-  return { success, disclosureUrlStatuses };
 }
 
 // Reference

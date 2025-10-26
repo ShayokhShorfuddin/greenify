@@ -72,12 +72,33 @@ export async function examineCarbonTxtFile({
 
     // Assuming response is ok && status code is 200-299: Success, file exists
 
+    // Even though the response is ok, we might actually be receiving a non-text file (Like Content-Type - text/html) which happened when we tested http://vercel.com/carbon.txt. So, we need to validate the Content-Type header as well. A valid carbon.txt file should have Content-Type: text/plain
+
+    const contentType = response.headers.get("Content-Type");
+
+    // If Content-Type is not text/plain, we consider the file no existing
+    if (!contentType?.includes("text/plain")) {
+      return {
+        exists: false,
+        reachable: true,
+        errorOccurred: false,
+        kind: "ExamineCarbonTxtFile",
+      };
+    }
+
     // Get the content of the file and validate it
     const content = await response.text();
 
     const result = await validateCarbonTxt({
       content,
     });
+
+    if (result.errorOccurred) {
+      return {
+        errorOccurred: true,
+        kind: "ExamineCarbonTxtFile",
+      };
+    }
 
     if (!result.success) {
       return {
