@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { IPToCo2IntensityCardContent } from "./IPToCo2IntensityCardContent";
 import { IPToCo2IntensityCardSkeleton } from "./IPToCo2IntensityCardSkeleton";
 
-export default async function IPToCo2Intensity({ url }: { url: string }) {
+export default async function IPToCo2IntensityCard({ url }: { url: string }) {
   return (
     <div className="relative bg-audit-card-background border border-audit-card-border rounded-lg p-3">
       {/* Audit number */}

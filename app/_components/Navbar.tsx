@@ -101,7 +101,7 @@ function NavigationDropdown() {
           </Link>
         </li>
         <li>
-          <Link href="#pricing">
+          <Link href="/">
             <p className="text-sm text-nowrap">About</p>
           </Link>
         </li>

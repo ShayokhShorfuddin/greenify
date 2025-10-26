@@ -7,7 +7,7 @@ const information = [
   {
     header: "Is this service free to use?",
     content:
-      "Yes, our service is completely free to use. We believe in making web sustainability accessible to everyone. However, we would really appreciate contributions to improve the platform and keep it available ",
+      "Yes, our service is completely free to use. We believe in making web sustainability accessible to everyone. However, we would really appreciate contributions to improve the platform and keep it running.",
   },
   {
     header: "How accurate are the generated results?",

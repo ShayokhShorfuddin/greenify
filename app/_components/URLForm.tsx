@@ -12,15 +12,21 @@ export default function URLForm() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // Guard clause for invalid URLs
-    if (!isValidUrl({ url })) {
-      setError("Please enter a valid URL.");
-      return;
-    }
-
     // If user left a trailing slash
     if (url.endsWith("/")) {
       setError("Please remove trailing slash.");
+      return;
+    }
+
+    // Must include http:// or https://
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      setError("URL must start with http:// or https://");
+      return;
+    }
+
+    // Guard clause for invalid URLs
+    if (!isValidUrl({ url })) {
+      setError("Please enter a valid URL.");
       return;
     }
 
