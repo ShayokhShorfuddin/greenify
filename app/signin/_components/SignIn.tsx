@@ -35,7 +35,7 @@ export function SignIn() {
     },
 
     onSubmit: async ({ value }) => {
-      //  TODO:
+      //  TODO: add better-auth and connect with MongoDB
       // await signInUser({
       //   email: value.email,
       //   password: value.password,
@@ -51,6 +51,7 @@ export function SignIn() {
           <p className="text-lg text-green-500">Greenify</p>
 
           <form className="w-full">
+            {/* TODO: Implement Google Sign-In */}
             <button
               type="button"
               className="flex gap-x-3 justify-center items-center text-nowrap w-full border border-green-500  text-neutral-800 font-medium mt-6 py-2 rounded-lg hover:cursor-pointer select-none"

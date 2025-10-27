@@ -4,7 +4,11 @@
 import { type AnyFieldApi, useForm } from "@tanstack/react-form";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { useState } from "react";
 import { z } from "zod";
+import getAuthErrorMessage from "@/app/_utils/auth-error-messages";
+import { authClient } from "@/lib/auth-client";
 import google from "@/public/svgs/google.svg";
 import guy_working_on_his_laptop3 from "@/public/svgs/guy-working-on-laptop3.svg";
 
@@ -41,6 +45,7 @@ const signUpSchema = z
   });
 
 export function SignUp() {
+  const [authErrorMessage, setAuthErrorMessage] = useState<string>("");
   const form = useForm({
     defaultValues: {
       name: "",
@@ -54,15 +59,30 @@ export function SignUp() {
     },
 
     onSubmit: async ({ value }) => {
-      try {
-        // TODO: keep it in client-side btw
-        // await authClient.signUp.email({
-        //   name: value.name,
-        //   email: value.email,
-        //   password: value.password,
-        // });
-      } catch (error) {}
-      // TODO: Catch errors from better-auth
+      const { error } = await authClient.signUp.email({
+        name: value.name,
+        email: value.email,
+        password: value.password,
+      });
+
+      // If there was an error
+      if (error) {
+        if (error?.code) {
+          setAuthErrorMessage(getAuthErrorMessage(error?.code));
+          return;
+        }
+
+        // An error occurred but there is no code? This could be due to change in better-auth library. For this situation, we will be returning a generic error message and call sentry
+
+        // TODO: call sentry
+        setAuthErrorMessage(
+          "We have encountered a strange error. Please try again later.",
+        );
+        return;
+      }
+
+      // If no error, redirect to dashboard
+      redirect("/dashboard");
     },
   });
   return (
@@ -73,6 +93,7 @@ export function SignUp() {
           <p className="text-lg text-green-500">Greenify</p>
 
           <form className="w-full">
+            {/* TODO: Implement Google Sign-In */}
             <button
               type="button"
               className="flex gap-x-3 justify-center items-center text-nowrap w-full border border-green-500  text-neutral-800 font-medium mt-6 py-2 rounded-lg hover:cursor-pointer select-none"
@@ -164,6 +185,11 @@ export function SignUp() {
                   />
 
                   <ErrorInfo field={field} />
+
+                  {/* Auth error */}
+                  {authErrorMessage !== "" ? (
+                    <p className="text-red-500 text-sm">{authErrorMessage}</p>
+                  ) : null}
                 </>
               )}
             />
@@ -177,6 +203,7 @@ export function SignUp() {
                   disabled={!canSubmit || isValidating}
                   className="relative bg-green-500 py-1 px-3 rounded text-white text-sm font-medium select-none transition-all duration-50 ease-in-out hover:cursor-pointer shadow-[0_3px_0_0_#008236] xs:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0_0_0_0_#008236] mt-2"
                 >
+                  {/* TODO: Sign up doesn't seem to change to hashing */}
                   {isValidating ? "Hashing..." : "Sign Up"}
                 </button>
               )}
