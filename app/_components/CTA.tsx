@@ -27,7 +27,7 @@ export function CTA() {
           <button
             type="button"
             onClick={() => {
-              // TODO: use router to push to /signup
+              // TODO: Check if user is signed in, if so redirect to dashboard, else redirect to sign up page
             }}
             className="relative bg-green-500 py-1 px-3 rounded text-white text-sm font-medium select-none transition-all duration-50 ease-in-out hover:cursor-pointer shadow-[0_3px_0_0_#008236] xs:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0_0_0_0_#008236] mt-2 w-fit"
           >
