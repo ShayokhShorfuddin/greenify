@@ -4,8 +4,11 @@
 import { type AnyFieldApi, useForm } from "@tanstack/react-form";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod";
+import getAuthErrorMessage from "@/app/_utils/auth-error-messages";
+import { authClient } from "@/lib/auth-client";
 import eye from "@/public/svgs/eye.svg";
 import eye_closed from "@/public/svgs/eye-closed.svg";
 import Google from "@/public/svgs/google.svg";
@@ -24,6 +27,8 @@ const signInSchema = z.object({
 });
 
 export function SignIn() {
+  const [authErrorMessage, setAuthErrorMessage] = useState<string>("");
+
   const form = useForm({
     defaultValues: {
       email: "",
@@ -35,11 +40,29 @@ export function SignIn() {
     },
 
     onSubmit: async ({ value }) => {
-      //  TODO: add better-auth and connect with MongoDB
-      // await signInUser({
-      //   email: value.email,
-      //   password: value.password,
-      // });
+      const { error } = await authClient.signIn.email({
+        email: value.email,
+        password: value.password,
+      });
+
+      // If there was an error
+      if (error) {
+        if (error?.code) {
+          setAuthErrorMessage(getAuthErrorMessage(error?.code));
+          return;
+        }
+
+        // An error occurred but there is no code? This could be due to change in better-auth library. For this situation, we will be returning a generic error message and call sentry
+
+        // TODO: call sentry
+        setAuthErrorMessage(
+          "We have encountered a strange error. Please try again later.",
+        );
+        return;
+      }
+
+      // If no error, redirect to dashboard
+      redirect("/dashboard");
     },
   });
 
@@ -96,7 +119,12 @@ export function SignIn() {
             <form.Field
               name="password"
               children={(field) => {
-                return <PasswordField field={field} />;
+                return (
+                  <PasswordField
+                    field={field}
+                    authErrorMessage={authErrorMessage}
+                  />
+                );
               }}
             />
 
@@ -132,7 +160,13 @@ export function SignIn() {
   );
 }
 
-function PasswordField({ field }: { field: AnyFieldApi }) {
+function PasswordField({
+  field,
+  authErrorMessage,
+}: {
+  field: AnyFieldApi;
+  authErrorMessage: string;
+}) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -165,6 +199,11 @@ function PasswordField({ field }: { field: AnyFieldApi }) {
       </div>
 
       <ErrorInfo field={field} />
+
+      {/* Auth error */}
+      {authErrorMessage !== "" ? (
+        <p className="text-red-500 text-sm">{authErrorMessage}</p>
+      ) : null}
     </>
   );
 }

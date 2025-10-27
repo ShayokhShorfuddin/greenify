@@ -3,7 +3,7 @@ const errorMap = new Map<string, string>([
     "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL",
     "You already have an account. Login instead.",
   ],
-  ["UNAUTHORIZED", "Invalid email or password."],
+  ["INVALID_EMAIL_OR_PASSWORD", "Invalid email or password."],
 ]);
 
 export default function getAuthErrorMessage(errorCode: string): string {
