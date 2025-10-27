@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CarbonTxtSupport } from "./_components/CarbonTxtSupport";
+import { CTA } from "./_components/CTA";
 import Dashboard from "./_components/Dashboard";
 import FAQ from "./_components/FAQ";
 import Hero from "./_components/Hero";
@@ -44,6 +45,7 @@ export default async function Page({
         <CarbonTxtSupport />
         <Scoring />
         <FAQ />
+        <CTA />
       </main>
     );
   }

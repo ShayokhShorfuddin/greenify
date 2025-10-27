@@ -33,7 +33,7 @@ const information = [
 
 export default function FAQ() {
   return (
-    <section className="flex justify-center mt-[7rem] font-sans">
+    <section className="flex justify-center mt-[4rem] md:mt-[7rem] font-sans">
       <div className="relative w-full max-w-[46rem] px-5">
         <p className="text-base sm:text-xl font-medium">
           Frequently Asked Questions.
@@ -43,7 +43,7 @@ export default function FAQ() {
           transition
           allowMultiple
           transitionTimeout={200}
-          className="w-full mt-[.5rem] border border-green-400 rounded-2xl"
+          className="w-full mt-[.5rem] border border-green-400 rounded-2xl p-2"
         >
           {information.map(({ header, content }, i) => (
             // `transitionTimeout` prop should be equal to the transition duration in CSS

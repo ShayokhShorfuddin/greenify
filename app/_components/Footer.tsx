@@ -2,6 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
+    // TODO: Add preply like Footer
     <footer className="bg-green-500 p-2 font-sans mt-[5rem]">
       <p className="text-white font-medium text-sm text-center">
         Built with {getRandomEmoji()} by{" "}
