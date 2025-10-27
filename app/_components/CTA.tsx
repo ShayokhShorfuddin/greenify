@@ -5,7 +5,7 @@ import guy_working_on_laptop from "@/public/svgs/guy-working-on-laptop.svg";
 
 export function CTA() {
   return (
-    <section className="flex justify-center mt-[4rem] md:mt-[7rem] font-sans">
+    <section className="flex justify-center mt-[4rem] md:mt-[7rem] mb-[4rem] md:mb-[7rem] font-sans">
       <div className="px-4 flex flex-col sm:flex-row items-center md:items-start justify-between max-w-[40rem] w-full gap-12">
         <Image
           src={guy_working_on_laptop}
