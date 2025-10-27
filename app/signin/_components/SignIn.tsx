@@ -53,7 +53,7 @@ export function SignIn() {
           <form className="w-full">
             <button
               type="button"
-              className="flex gap-x-3 justify-center items-center text-nowrap w-full border border-green-500  text-neutral-800 font-medium mt-6 py-2 rounded-sm hover:cursor-pointer select-none"
+              className="flex gap-x-3 justify-center items-center text-nowrap w-full border border-green-500  text-neutral-800 font-medium mt-6 py-2 rounded-lg hover:cursor-pointer select-none"
             >
               <Image src={Google} alt="icon" className="size-5" />
               <span className="text-sm">Continue with Google</span>
@@ -107,7 +107,7 @@ export function SignIn() {
                   disabled={!canSubmit || isSubmitting}
                   className="relative bg-green-500 py-1 px-3 rounded text-white text-sm font-medium select-none transition-all duration-50 ease-in-out hover:cursor-pointer shadow-[0_3px_0_0_#008236] xs:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0_0_0_0_#008236] mt-2"
                 >
-                  Sign In
+                  {isSubmitting ? "Hashing..." : "Sign In"}
                 </button>
               )}
             />
