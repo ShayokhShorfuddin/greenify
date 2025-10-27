@@ -91,33 +91,36 @@ export async function CarbonTxtCardContent({ url }: { url: string }) {
             Disclosures
           </p>
 
-          {results.disclosureUrlStatuses.map((disclosure, idx) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: <We won't reorder or modify this list>
-            <div className="flex items-center" key={idx}>
-              <p
-                className="text-sm text-neutral-500 truncate pr-6"
-                title={disclosure.url}
-              >
-                {disclosure.url}
-              </p>
+          <div className="flex flex-col gap-y-1">
+            {results.disclosureUrlStatuses.map((disclosure, idx) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: <We won't reorder or modify this list>
+              <div className="flex items-center justify-between" key={idx}>
+                <Link
+                  className="text-sm text-neutral-500 hover:underline break-all pr-6"
+                  href={disclosure.url}
+                  target="_blank"
+                >
+                  {disclosure.url}
+                </Link>
 
-              <small
-                className={`${
-                  disclosure.errorOccurred
-                    ? "text-red-500"
-                    : disclosure.status >= 200 && disclosure.status < 300
-                      ? "text-green-500"
-                      : disclosure.status >= 300 && disclosure.status < 400
-                        ? "text-yellow-500"
-                        : disclosure.status >= 400 && disclosure.status < 500
-                          ? "text-red-500"
-                          : "text-neutral-500"
-                } text-[12px]`}
-              >
-                {disclosure.errorOccurred ? "Failed" : disclosure.status}
-              </small>
-            </div>
-          ))}
+                <small
+                  className={`${
+                    disclosure.errorOccurred
+                      ? "text-red-500"
+                      : disclosure.status >= 200 && disclosure.status < 300
+                        ? "text-green-500"
+                        : disclosure.status >= 300 && disclosure.status < 400
+                          ? "text-yellow-500"
+                          : disclosure.status >= 400 && disclosure.status < 500
+                            ? "text-red-500"
+                            : "text-neutral-500"
+                  } text-[12px]`}
+                >
+                  {disclosure.errorOccurred ? "Failed" : disclosure.status}
+                </small>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 

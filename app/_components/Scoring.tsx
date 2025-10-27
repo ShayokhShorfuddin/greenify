@@ -2,8 +2,8 @@ import { ScoreCard } from "./_static-homepage-audit-cards/ScoreCard";
 
 export function Scoring() {
   return (
-    <section className="flex justify-center mt-[7rem] font-sans">
-      <div className="flex gap-x-[3rem]">
+    <section className="flex justify-center mt-[4rem] md:mt-[7rem] font-sans px-4">
+      <div className="flex flex-col items-center md:items-start md:flex-row gap-x-[3rem] gap-y-[2rem]">
         <ScoreCard />
 
         <div className="flex flex-col">

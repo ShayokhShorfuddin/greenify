@@ -2,8 +2,8 @@ import { IPToCarbonIntensityCard } from "./_static-homepage-audit-cards/IPToCo2I
 
 export function Insight() {
   return (
-    <section className="flex justify-center mt-[7rem] font-sans">
-      <div className="flex gap-x-[3rem]">
+    <section className="flex justify-center mt-[7rem] font-sans px-4">
+      <div className="flex flex-col md:flex-row gap-x-[3rem] gap-y-[2rem]">
         <IPToCarbonIntensityCard />
 
         <div className="flex flex-col">

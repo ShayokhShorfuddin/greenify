@@ -2,7 +2,7 @@ import { CopyToClipboardButton } from "../_audit-result-components/CopyToClipboa
 
 export function ScoreCard() {
   return (
-    <div className="relative bg-audit-card-background border border-audit-card-border rounded-lg p-3 max-w-[30rem]">
+    <div className="relative bg-audit-card-background border border-audit-card-border rounded-lg p-3 max-w-fit">
       {/* Score number */}
       <small className="text-neutral-700 font-mono">Score #2</small>
       <p className="text-[15px]">Greenify Score.</p>

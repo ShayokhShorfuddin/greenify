@@ -3,8 +3,8 @@ import { CarbonTxtCard } from "./_static-homepage-audit-cards/CarbonTxtCard";
 
 export function CarbonTxtSupport() {
   return (
-    <section className="flex justify-center mt-[7rem] font-sans">
-      <div className="flex gap-x-[3rem]">
+    <section className="flex justify-center mt-[4rem] md:mt-[7rem] font-sans px-4">
+      <div className="flex flex-col-reverse md:flex-row gap-x-[3rem] gap-y-[2rem]">
         <div className="flex flex-col">
           <h2 className="text-2xl font-medium">We 💚 Carbon.txt</h2>
 

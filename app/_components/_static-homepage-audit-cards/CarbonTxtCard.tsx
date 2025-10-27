@@ -41,26 +41,30 @@ URL: https://www.thegreenwebfoundation.org/carbon.txt`}
       <div>
         <p className="text-sm font-medium text-neutral-600 mt-2">Disclosures</p>
 
-        <div className="flex items-center">
-          <p
-            className="text-sm text-neutral-500 truncate pr-6"
-            title="https://www.techcarbonstandard.org/case-studies/green-web-foundation/overview"
-          >
-            https://www.techcarbonstandard.org/case-studies/green-web-foundation/overview
-          </p>
+        <div className="flex flex-col gap-y-1">
+          <div className="flex items-center justify-between">
+            <Link
+              target="_blank"
+              className="text-sm text-neutral-500 hover:underline break-all pr-6"
+              href="https://www.techcarbonstandard.org/case-studies/green-web-foundation/overview"
+            >
+              https://www.techcarbonstandard.org/case-studies/green-web-foundation/overview
+            </Link>
 
-          <small className="text-green-500 text-[12px]">200</small>
-        </div>
+            <small className="text-green-500 text-[12px]">200</small>
+          </div>
 
-        <div className="flex items-center">
-          <p
-            className="text-sm text-neutral-500 truncate pr-6"
-            title="https://www.thegreenwebfoundation.org/.well-known/tcs.json"
-          >
-            https://www.thegreenwebfoundation.org/.well-known/tcs.json
-          </p>
+          <div className="flex items-center justify-between">
+            <Link
+              target="_blank"
+              className="text-sm text-neutral-500 hover:underline break-all pr-6"
+              href="https://www.thegreenwebfoundation.org/.well-known/tcs.json"
+            >
+              https://www.thegreenwebfoundation.org/.well-known/tcs.json
+            </Link>
 
-          <small className="text-green-500 text-[12px]">200</small>
+            <small className="text-green-500 text-[12px]">200</small>
+          </div>
         </div>
       </div>
 
@@ -69,7 +73,7 @@ URL: https://www.thegreenwebfoundation.org/carbon.txt`}
         href="https://www.thegreenwebfoundation.org/carbon.txt"
         target="_blank"
       >
-        <p className="mt-2 text-sm text-blue-500 underline break-words overflow-hidden">
+        <p className="mt-2 text-sm text-blue-500 underline break-all">
           https://www.thegreenwebfoundation.org/carbon.txt
         </p>
       </Link>
