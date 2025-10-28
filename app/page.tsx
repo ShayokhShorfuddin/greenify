@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { CarbonTxtSupport } from "./_components/CarbonTxtSupport";
 import { CTA } from "./_components/CTA";
-import Dashboard from "./_components/Dashboard";
 import FAQ from "./_components/FAQ";
 import Hero from "./_components/Hero";
 import { Insight } from "./_components/Insights";
@@ -30,28 +29,16 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ url?: string }>;
-}) {
-  const { url } = await searchParams; // url is a string or undefined
-
-  // If no url param, render the homepage.
-  if (!url) {
-    return (
-      <main>
-        <Navbar />
-        <Hero />
-        <Insight />
-        <CarbonTxtSupport />
-        <Scoring />
-        <FAQ />
-        <CTA />
-      </main>
-    );
-  }
-
-  // If there is a url param, render the dashboard.
-  return <Dashboard url={url} />;
+export default async function Page() {
+  return (
+    <main>
+      <Navbar />
+      <Hero />
+      <Insight />
+      <CarbonTxtSupport />
+      <Scoring />
+      <FAQ />
+      <CTA />
+    </main>
+  );
 }

@@ -85,6 +85,7 @@ export function SignUp() {
       redirect("/dashboard");
     },
   });
+
   return (
     <section className="flex flex-col items-center justify-center h-svh font-sans">
       <div className="flex w-full max-w-[34rem] items-center justify-center md:justify-between">
@@ -195,19 +196,17 @@ export function SignUp() {
             />
 
             <form.Subscribe
-              selector={(state) => [state.canSubmit, state.isValidating]}
-            >
-              {([canSubmit, isValidating]) => (
+              selector={(state) => [state.canSubmit, state.isSubmitting]}
+              children={([canSubmit, isSubmitting]) => (
                 <button
                   type="submit"
-                  disabled={!canSubmit || isValidating}
+                  disabled={!canSubmit || isSubmitting}
                   className="relative bg-green-500 py-1 px-3 rounded text-white text-sm font-medium select-none transition-all duration-50 ease-in-out hover:cursor-pointer shadow-[0_3px_0_0_#008236] xs:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0_0_0_0_#008236] mt-2"
                 >
-                  {/* TODO: Sign up doesn't seem to change to hashing */}
-                  {isValidating ? "Hashing..." : "Sign Up"}
+                  {isSubmitting ? "Hashing..." : "Sign Up"}
                 </button>
               )}
-            </form.Subscribe>
+            />
           </form>
 
           <p className="text-sm text-nowrap mt-4">

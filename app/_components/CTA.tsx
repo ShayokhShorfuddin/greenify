@@ -1,9 +1,12 @@
 "use client";
-
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 import guy_working_on_laptop from "@/public/svgs/guy-working-on-laptop.svg";
 
 export function CTA() {
+  const router = useRouter();
+
   return (
     <section className="flex justify-center mt-[4rem] md:mt-[7rem] mb-[4rem] md:mb-[7rem] font-sans">
       <div className="px-4 flex flex-col sm:flex-row items-center md:items-start justify-between max-w-[40rem] w-full gap-12">
@@ -26,8 +29,17 @@ export function CTA() {
 
           <button
             type="button"
-            onClick={() => {
-              // TODO: Check if user is signed in, if so redirect to dashboard, else redirect to sign up page
+            onClick={async () => {
+              const { data: session } = await authClient.getSession();
+
+              // If not logged in, we will redirect them to sign in
+              if (!session) {
+                router.push("/signin");
+                return;
+              }
+
+              // If currently logged in, we will redirect them to the dashboard
+              router.push("/dashboard");
             }}
             className="relative bg-green-500 py-1 px-3 rounded text-white text-sm font-medium select-none transition-all duration-50 ease-in-out hover:cursor-pointer shadow-[0_3px_0_0_#008236] xs:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0_0_0_0_#008236] mt-2 w-fit"
           >

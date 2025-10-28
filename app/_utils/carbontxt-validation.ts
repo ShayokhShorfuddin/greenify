@@ -1,7 +1,7 @@
 import logger from "@/logger";
 import { pingUrl } from "./ping";
 
-export type Type_DisclosureUrlStatus =
+type Type_DisclosureUrlStatus =
   | {
       errorOccurred: true;
       url: string;
