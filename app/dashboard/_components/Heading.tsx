@@ -1,5 +1,6 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import download from "@/public/svgs/download.svg";
@@ -10,6 +11,11 @@ export function Heading() {
   const { data: session, isPending } = authClient.useSession();
   const userName = session?.user.name || "Guest";
   const firstName = userName.split(" ")[0];
+
+  // const query = useQuery({
+  //   queryFn: async () => {},
+  //   queryKey: ["projects"],
+  // });
 
   return (
     <header className="p-2 font-sans">
