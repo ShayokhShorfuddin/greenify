@@ -1,6 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Footer from "./_components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,11 +26,11 @@ export default function RootLayout({
       )}
 
       <body
+        id="root-body"
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {/* min-h-svh in order to push footer to bottom on tall screens */}
         <div className="min-h-svh">{children}</div>
-        <Footer />
       </body>
     </html>
   );

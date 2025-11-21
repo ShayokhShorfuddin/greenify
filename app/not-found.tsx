@@ -7,11 +7,11 @@ export default function NotFound() {
 
   return (
     <main className="flex flex-col h-svh w-full justify-center items-center font-sans">
-      <h1 className="text-2xl xs:text-4xl sm:text-5xl text-center font-medium text-green-500">
+      <h1 className="text-2xl xs:text-3xl sm:text-4xl text-center font-medium text-green-500">
         Are You Lost?
       </h1>
 
-      <p className="mt-2 px-5 text-sm xs:text-base text-center">
+      <p className="mt-1 px-5 text-sm text-center">
         We can help you find your way back.
       </p>
 

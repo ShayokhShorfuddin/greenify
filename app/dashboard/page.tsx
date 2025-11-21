@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
+import { Dashboard } from "./_components/Dashboard";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -6,9 +10,16 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function Page() {
-  // TODO: Since this is a new page, shouldn't we have an h1 here?
-  // TODO: Design UI for the dashboard page.
+export default async function Page() {
   // TODO: Design sidebar
-  return <h1>Dashboard Page</h1>;
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    redirect("/login");
+  }
+
+  return <Dashboard />;
 }

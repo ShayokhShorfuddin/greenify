@@ -22,7 +22,7 @@ const information = [
   {
     header: "There are existing solutions out there. Why another one?",
     content:
-      "We are aware of existing solutions and, in fact, we use some of them ourselves. However, none offer a feature-rich, open-source, complete solution. Think of it as scattered pieces of a puzzle that we are determined to put together.",
+      "We are aware of existing solutions and, in fact, we use some of them ourselves. However, none offer a feature-rich, source-available, complete solution. Think of it as scattered pieces of a puzzle that we are determined to put together.",
   },
   {
     header: "Can I audit password-protected or localhost sites?",
