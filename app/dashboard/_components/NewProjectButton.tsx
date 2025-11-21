@@ -192,13 +192,12 @@ function ModalContent({
           )}
         />
 
-        <div className="flex justify-end items-center gap-x-2 mt-5">
+        <div className="flex justify-end items-center mt-5">
           <button
             type="button"
             onClick={closeModalFn}
-            className="text-sm text-neutral-600 hover:underline hover:cursor-pointer"
+            className="text-sm text-neutral-600 py-1 px-3 hover:underline hover:cursor-pointer"
           >
-            {/* TODO: Style it */}
             Cancel
           </button>
 
