@@ -80,6 +80,8 @@ function ModalContent({
       projectUrl: "",
     },
 
+    // TODO: ⚠️⚠️⚠️ Need React Query!
+
     // TODO: Call database right?
     onSubmit: ({ value }) => {
       console.log(value.projectName, value.projectUrl);
@@ -178,8 +180,6 @@ function ModalContent({
                 value={field.state.value}
                 onChange={(e) => field.handleChange(e.target.value)}
               />
-
-              {/* TODO: Debounce? */}
 
               {/* Error message */}
               {!field.state.meta.isValid &&
