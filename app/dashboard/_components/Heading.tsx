@@ -1,21 +1,15 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import download from "@/public/svgs/download.svg";
 import { NewProjectButton } from "./NewProjectButton";
 
-export function Heading() {
+export function Heading({ projectID }: { projectID?: string }) {
   // Get user session and first name
   const { data: session, isPending } = authClient.useSession();
   const userName = session?.user.name || "Guest";
   const firstName = userName.split(" ")[0];
-
-  // const query = useQuery({
-  //   queryFn: async () => {},
-  //   queryKey: ["projects"],
-  // });
 
   return (
     <header className="p-2 font-sans">
@@ -25,6 +19,7 @@ export function Heading() {
         </h1>
 
         <div className="flex gap-x-2 items-center">
+          {/* TODO: Make use of projectID */}
           {/* TODO: Load projects from database and populate.*/}
           <select name="" id="" className="hover:cursor-pointer">
             <option value="project1">Project 1</option>

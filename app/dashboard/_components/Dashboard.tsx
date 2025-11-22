@@ -1,21 +1,25 @@
 // TODO: Design UI for the dashboard page.
 
+import { Toaster } from "react-hot-toast";
+
+import { ComponentGrid } from "./ComponentGrid";
+import { CreateOrSelectNewProject } from "./CreateOrSelectNewProject";
 import { Heading } from "./Heading";
 
-export function Dashboard() {
+export function Dashboard({ projectID }: { projectID?: string }) {
   // TODO: check in database if user has any project. If yes, show project details else show "Create a new project" section.
   return (
-    <main>
+    <main className="font-sans">
       {/* Add "Create a new project" section if no project found in database*/}
-      <Heading />
+      <Heading projectID={projectID} />
 
-      {/* Container of all dashboard components */}
-      <section className="grid grid-cols-4 grid-rows-1 gap-5 mt-[2rem] px-[1.2rem] font-sans">
-        <p>Hello</p>
-        {/* <CarbonTxtCard url={url} />
-        <GreenHostCard url={url} />
-        <IPToCo2IntensityCard url={url} /> */}
-      </section>
+      {/* If no projectID provided */}
+      {!projectID && <CreateOrSelectNewProject />}
+
+      {/* If projectID is provided */}
+      {projectID && <ComponentGrid projectID={projectID} />}
+
+      <Toaster />
     </main>
   );
 }

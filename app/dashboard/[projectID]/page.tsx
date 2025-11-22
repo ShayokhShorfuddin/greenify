@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
-import { Dashboard } from "./_components/Dashboard";
+import { Dashboard } from "../_components/Dashboard";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -10,7 +10,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function Page() {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ projectID: string }>;
+}) {
   // TODO: Design sidebar
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -20,5 +24,6 @@ export default async function Page() {
     redirect("/signin");
   }
 
-  return <Dashboard />;
+  const { projectID } = await params;
+  return <Dashboard projectID={projectID} />;
 }

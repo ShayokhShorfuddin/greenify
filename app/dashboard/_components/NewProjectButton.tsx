@@ -3,9 +3,12 @@
 
 import { useForm } from "@tanstack/react-form";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import Modal from "react-modal";
 import isValidUrl from "@/app/_utils/is-valid-url";
+import { addProject } from "@/app/actions/data/projects";
+import { authClient } from "@/lib/auth-client";
 import plus from "@/public/svgs/plus.svg";
 
 // Necessary for screen readers and accessibility
@@ -49,7 +52,6 @@ export function NewProjectButton() {
         onClick={openModal}
         className="flex items-center gap-x-1.5 py-0.5 px-2 rounded text-sm font-medium border border-green-500 hover:cursor-pointer"
       >
-        {/* TODO: We will take information when creating new project through a modal. In can contain "Project name", "url" and the create & cancel button. That should be enough for now*/}
         <Image src={plus} alt="New Project" className="size-3" />
         New Project
       </button>
@@ -74,25 +76,52 @@ function ModalContent({
   openModalFn: () => void;
   closeModalFn: () => void;
 }) {
+  const [error, setError] = useState<string | null>(null); // For displaying failure messages
+
   const form = useForm({
     defaultValues: {
       projectName: "",
       projectUrl: "",
     },
 
-    // TODO: ⚠️⚠️⚠️ Need React Query!
-
     // TODO: Call database right?
-    onSubmit: ({ value }) => {
-      console.log(value.projectName, value.projectUrl);
+    onSubmit: async ({ value }) => {
+      const projectUrl = value.projectUrl.toLowerCase().trim();
 
-      //   TODO: Save the project along side the user email to database
+      // Clear any previous insertion failure message
+      setError(null);
 
-      // TODO: Wait, what if there is already a project with the same name and url? We should prevent that. Query data and check and alert user. They might trick us by changing example.com to Example.com or example.com/abc/ etc. Since we are already placed guards and made sure that the urls are structurally valid, we can probably pass it to URL constructor and get the "domain" part (example) for comparison. Only 1 domain per project is allowed. Should we allow subdomains? like abc.example.com and xyz.example.com as different projects? For now, let's not allow that. We can always change it later.
+      // Get the email of the user
+      const { data: session } = await authClient.getSession();
+      const ownerEmail = session?.user.email as string;
+
+      const response = await addProject({
+        name: value.projectName,
+        url: projectUrl,
+        ownerEmail: ownerEmail,
+      });
+
+      // If insertion failed
+      if (response.errorOccurred) {
+        setError("Failed to create new project. Consider trying again.");
+        return;
+      }
+
+      // If project already exists
+      if (response.projectAlreadyExists) {
+        setError("Project already exists.");
+        return;
+      }
+
+      // Close modal
+      closeModalFn();
+
+      // TODO: Redirect to the new project's dashboard through the new project ID
+      redirect(`/dashboard/${response.projectID}`);
+
+      // TODO: Should we allow subdomains? like abc.example.com and xyz.example.com as different projects? For now, let's not allow that. We can always change it later.
 
       //   Can multiple users monitor the same sites (example.com) under different accounts? Normally they can but since we will tell them to copy and paste our special script into their site, only the person who has access to the site can do that. The people don't have access to the site can't add our script tag, so they can only see the normal audits that don't require our script tag. So it's fine to allow multiple users to monitor the same site. Basically they will be missing out on the real-time features and graphs.
-
-      //   TODO: Try saving to database. If success, reload the page, which will let the dashboard fetch projects from database again, finding the new project. But what if there are multiple projects already? Which one to open by default? We can sort the projects by last modified date, and open the most recently modified one. The most recently modified one will be saved on local storage.Every time user selects project from <select> tag, we should update local storage too.
     },
   });
 
@@ -149,6 +178,9 @@ function ModalContent({
           name="projectUrl"
           validators={{
             onChange: ({ value }) => {
+              // The user must be editing their project URL after realizing it already exists. So we clear the error message. Otherwise, the error message will stay at the bottom while they are editing, which is kinda odd.
+              setError(null);
+
               value = value.trim();
 
               // If user left a trailing slash
@@ -188,6 +220,11 @@ function ModalContent({
                     {field.state.meta.errors[0]}
                   </p>
                 )}
+
+              {/* Failures */}
+              {error && (
+                <p className="text-sm text-red-500 mt-1 w-full">{error}</p>
+              )}
             </>
           )}
         />
