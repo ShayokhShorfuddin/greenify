@@ -1,42 +1,45 @@
-"use client";
-
+import { headers } from "next/headers";
 import Image from "next/image";
-import { authClient } from "@/lib/auth-client";
+import { getAllProjectNames } from "@/app/actions/data/projects";
+import { auth } from "@/lib/auth";
 import download from "@/public/svgs/download.svg";
 import { NewProjectButton } from "./NewProjectButton";
+import { Select } from "./Select";
 
-export function Heading({ projectID }: { projectID?: string }) {
-  // Get user session and first name
-  const { data: session, isPending } = authClient.useSession();
+export async function Heading({ projectID }: { projectID?: string }) {
+  // Get the current logged in user's email from the session
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  // Get user session, first name and email
   const userName = session?.user.name || "Guest";
   const firstName = userName.split(" ")[0];
+  const userEmail = session?.user.email;
+
+  // Create a promise to get user's projects
+  const getAllProjectNamesPromise = getAllProjectNames(userEmail as string);
 
   return (
     <header className="p-2 font-sans">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg">
-          Welcome{isPending ? null : `, ${firstName}`}
-        </h1>
+        <h1 className="text-lg">Welcome, {firstName}</h1>
 
         <div className="flex gap-x-2 items-center">
-          {/* TODO: Make use of projectID */}
-          {/* TODO: Load projects from database and populate.*/}
-          <select name="" id="" className="hover:cursor-pointer">
-            <option value="project1">Project 1</option>
-            <option value="project2">Project 2</option>
-            <option value="project3">Project 3</option>
-          </select>
+          <Select
+            projectID={projectID}
+            getAllProjectNamesPromise={getAllProjectNamesPromise}
+          />
 
           {/* Export button */}
           <button
             type="button"
             className="relative flex items-center gap-x-1.5 bg-green-500 py-0.5 px-2 rounded text-white text-sm font-medium select-none transition-all duration-50 ease-in-out hover:cursor-pointer shadow-[0_3px_0_0_#008236] xs:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0_0_0_0_#008236] w-fit"
           >
-            {/* TODO: We will initiate a modal on click. Will have all the export type we promised*/}
+            {/* TODO: We will initiate a modal on click. Will have all the export types we promised*/}
             <Image src={download} alt="Export" className="size-3.5" />
             Export
           </button>
-
           <NewProjectButton />
         </div>
       </div>

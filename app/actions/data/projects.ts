@@ -33,25 +33,40 @@ export async function addProject(
       projectAlreadyExists: false,
       projectID: insertedId.toString(),
     };
-  } catch {
+  } catch (e) {
     // TODO: Call sentry here
+    logger.error("Error in addProject:", e);
     return { errorOccurred: true };
   }
 }
 
-// Get all project's names (usefull for listing projects in the select project component)
-// export async function getAllProjectNames(
-//   ownerEmail: string,
-// ): Promise<Type_GetAllProjectNamesResponse> {}
+// Get all project's names (useful for listing projects in the select project component)
+export async function getAllProjectNames(
+  ownerEmail: string,
+): Promise<Type_GetAllProjectNamesResponse> {
+  const projectsCollection = client.db("Greenify").collection("projects");
+  try {
+    const projects = await projectsCollection
+      .find({ ownerEmail }, { projection: { name: 1 } })
+      .toArray();
+
+    return {
+      errorOccurred: false,
+      projectNames: projects.map((p) => ({
+        name: p.name,
+        projectID: p._id.toString(),
+      })),
+    };
+  } catch (e) {
+    logger.error("Error in getAllProjectNames:", e);
+    return { errorOccurred: true };
+  }
+}
 
 // Get a single project by its ID
 export async function getProjectByID(
   projectID: string,
 ): Promise<Type_GetProjectByIDResponse> {
-  //TODO: remove me later.
-  //  Simulate 3 second delay
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-
   const projectsCollection = client.db("Greenify").collection("projects");
   try {
     const project = await projectsCollection.findOne({

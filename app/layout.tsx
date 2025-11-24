@@ -30,10 +30,8 @@ export default function RootLayout({
         id="root-body"
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* <QueryProvider> */}
         {/* min-h-svh in order to push footer to bottom on tall screens */}
         <div className="min-h-svh">{children}</div>
-        {/* </QueryProvider> */}
       </body>
     </html>
   );

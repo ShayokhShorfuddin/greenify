@@ -3,6 +3,9 @@ import { CarbonTxtCardContent } from "./CarbonTxtCardContent";
 import { CarbonTxtCardSkeleton } from "./CarbonTxtCardSkeleton";
 
 export default async function CarbonTxtCard({ url }: { url: string }) {
+  // Add 3 second artificial delay for demo purposes
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   return (
     <div className="relative bg-audit-card-background border border-audit-card-border rounded-lg p-3">
       {/* Audit number */}

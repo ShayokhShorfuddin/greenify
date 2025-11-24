@@ -17,13 +17,8 @@ import guy_working_on_his_laptop2 from "@/public/svgs/guy-working-on-laptop2.svg
 const signInSchema = z.object({
   email: z
     .email({ message: "Please enter a valid email address." })
-    .max(40, { message: "Email cannot be longer than 40 characters." })
     .nonempty({ message: "Please enter your email address." }),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long." })
-    .max(30, { message: "Password should not be longer than 30 characters." })
-    .nonempty({ message: "Please enter a password." }),
+  password: z.string().nonempty({ message: "Please enter your password." }),
 });
 
 export function SignIn() {
@@ -107,7 +102,13 @@ export function SignIn() {
                     name="email"
                     placeholder="john@example.com"
                     value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
+                    onChange={(e) => {
+                      // Reset auth error message on change
+                      setAuthErrorMessage("");
+
+                      // Let Tanstack form handle the change
+                      field.handleChange(e.target.value);
+                    }}
                     className="px-4 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:border-green-500 placeholder-neutral-400"
                   />
 
@@ -123,6 +124,7 @@ export function SignIn() {
                   <PasswordField
                     field={field}
                     authErrorMessage={authErrorMessage}
+                    setAuthErrorMessage={setAuthErrorMessage}
                   />
                 );
               }}
@@ -163,9 +165,11 @@ export function SignIn() {
 function PasswordField({
   field,
   authErrorMessage,
+  setAuthErrorMessage,
 }: {
   field: AnyFieldApi;
   authErrorMessage: string;
+  setAuthErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -177,7 +181,13 @@ function PasswordField({
           placeholder="Enter your password"
           type={showPassword ? "text" : "password"}
           value={field.state.value}
-          onChange={(e) => field.handleChange(e.target.value)}
+          onChange={(e) => {
+            // Reset auth error message on change
+            setAuthErrorMessage("");
+
+            // Let Tanstack form handle the change
+            field.handleChange(e.target.value);
+          }}
           className="px-4 py-2 rounded-l-lg border border-neutral-300 focus:outline-none focus:border-green-500 w-full"
         />
 
