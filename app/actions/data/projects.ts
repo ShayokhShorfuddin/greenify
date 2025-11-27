@@ -9,6 +9,7 @@ import { project } from "@/schemas/project-schema";
 import type {
   Type_AddProjectResponse,
   Type_GetAllProjectNamesResponse,
+  Type_GetProjectByIDResponse,
 } from "./types";
 
 // Add a new project
@@ -54,7 +55,7 @@ export async function addProject({
   } catch (error) {
     // TODO: Call sentry here
 
-    logger.error("Error in addProject:", error);
+    logger.error(`Error in addProject: ${error}`);
     return { errorOccurred: true };
   }
 }
@@ -82,7 +83,7 @@ export async function getAllProjectNamesAndIDs({
   } catch (error) {
     // TODO: Call sentry here
 
-    logger.error("Error in getAllProjectNamesAndIDs:", error);
+    logger.error(`Error in getAllProjectNamesAndIDs: ${error}`);
 
     return {
       errorOccurred: true,
@@ -90,33 +91,44 @@ export async function getAllProjectNamesAndIDs({
   }
 }
 
-// // Get a single project by its ID
-// export async function getProjectByID(
-//   projectID: string,
-// ): Promise<Type_GetProjectByIDResponse> {
-//   const projectsCollection = client.db("Greenify").collection("projects");
-//   try {
-//     const project = await projectsCollection.findOne({
-//       _id: new ObjectId(projectID),
-//     });
+// Get a single project by its ID
+export async function getProjectByID({
+  projectID,
+}: {
+  projectID: string;
+}): Promise<Type_GetProjectByIDResponse> {
+  try {
+    const db = getDB();
 
-//     // If not found
-//     if (!project) {
-//       return { errorOccurred: false, notFound: true };
-//     }
+    const projectData = await db.query.project.findFirst({
+      where: eq(project.id, projectID),
+    });
 
-//     // If found
-//     return {
-//       errorOccurred: false,
-//       notFound: false,
+    // If not found
+    if (!projectData) {
+      return {
+        errorOccurred: false,
+        notFound: true,
+      };
+    }
 
-//       project: {
-//         name: project.name,
-//         url: project.url,
-//       },
-//     };
-//   } catch (e) {
-//     logger.error("Error in getProjectByID:", e);
-//     return { errorOccurred: true };
-//   }
-// }
+    // If found
+    return {
+      errorOccurred: false,
+      notFound: false,
+
+      project: {
+        name: projectData.projectName,
+        url: projectData.projectURL,
+      },
+    };
+  } catch (error) {
+    // TODO: Call sentry here
+
+    logger.error(`Error in getProjectByID: ${error}`);
+
+    return {
+      errorOccurred: true,
+    };
+  }
+}
