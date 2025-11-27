@@ -1,30 +1,38 @@
-import { MongoClient } from "mongodb";
-import logger from "@/logger";
+import { drizzle } from "drizzle-orm/postgres-js";
 
-if (!process.env.MONGODB_URI) {
-  // Throwing error for this case is okay
-  throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
+export function getDB() {
+  return drizzle(process.env.DATABASE_URL as string);
 }
 
-const uri = process.env.MONGODB_URI as string;
-const options = {};
+// TODO: Legacy MongoDB stuff. Remove after stable migration to Drizzle and Supabase
 
-let client: MongoClient;
+// import { MongoClient } from "mongodb";
+// import logger from "@/logger";
 
-if (process.env.NODE_ENV === "development") {
-  const globalWithMongo = globalThis as typeof globalThis & {
-    _mongoClient?: MongoClient;
-  };
+// if (!process.env.MONGODB_URI) {
+//   // Throwing error for this case is okay
+//   throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
+// }
 
-  if (!globalWithMongo._mongoClient) {
-    logger.info("Created MongoDB client. NODE_ENV is development.");
-    globalWithMongo._mongoClient = new MongoClient(uri, options);
-  }
+// const uri = process.env.MONGODB_URI as string;
+// const options = {};
 
-  client = globalWithMongo._mongoClient;
-} else {
-  logger.info("Created MongoDB client. NODE_ENV is production.");
-  client = new MongoClient(uri, options);
-}
+// let client: MongoClient;
 
-export default client;
+// if (process.env.NODE_ENV === "development") {
+//   const globalWithMongo = globalThis as typeof globalThis & {
+//     _mongoClient?: MongoClient;
+//   };
+
+//   if (!globalWithMongo._mongoClient) {
+//     logger.info("Created MongoDB client. NODE_ENV is development.");
+//     globalWithMongo._mongoClient = new MongoClient(uri, options);
+//   }
+
+//   client = globalWithMongo._mongoClient;
+// } else {
+//   logger.info("Created MongoDB client. NODE_ENV is production.");
+//   client = new MongoClient(uri, options);
+// }
+
+// export default client;
