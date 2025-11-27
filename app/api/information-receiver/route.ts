@@ -1,6 +1,55 @@
+import { ObjectId } from "bson";
+import client from "@/lib/db";
+
+// TODO: ⚠️ Migrate to Supabase and Drizzle
+// TODO: Port better-auth to work with Supabase and Drizzle
+
+type Resource = {
+  url: string; // The URL of the file
+  type: string; // The type of the file
+  duration: number; // How long it took to download (ms)
+  transferSize: number; // Bytes transferred over network
+};
+
+type Payload = {
+  projectId: string;
+  totalTransferSize: number;
+  resources: Resource[];
+};
+
+type HistoryEntry = {
+  totalTransferSize: number;
+  resources: Resource[];
+  timestamp: Date;
+};
+
+interface Project extends Document {
+  _id: ObjectId;
+  history: HistoryEntry[];
+}
+
 export async function POST(request: Request) {
-  const data = await request.json();
-  console.log("Received informer data: ", data);
+  // Handle incoming informer data
+  const data = (await request.json()) as Payload;
+
+  // Connect to MongoDB and store the data
+  const projectsCollection = client
+    .db("Greenify")
+    .collection<Project>("projects");
+
+  await projectsCollection.updateOne(
+    { _id: new ObjectId(data.projectId) },
+    {
+      $push: {
+        history: {
+          totalTransferSize: data.totalTransferSize,
+          resources: data.resources,
+          timestamp: new Date(),
+        },
+      },
+    },
+    { upsert: true },
+  );
 
   const origin = request.headers.get("origin") || "*";
 

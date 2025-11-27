@@ -8,7 +8,7 @@ type Resource = {
 };
 
 type Payload = {
-  url: string;
+  projectId: string;
   totalTransferSize: number;
   resources: Resource[];
 };
@@ -38,7 +38,8 @@ window.addEventListener("load", () => {
     observer.disconnect();
 
     const payload: Payload = {
-      url: window.location.href,
+      // TODO: This is supposed to be set automatically when we hand over the script to users. Hardcoded for now for testing.
+      projectId: "69243a4c425a03c34c76a53e",
 
       totalTransferSize: collectedResources.reduce(
         (acc, curr) => acc + curr.transferSize,
@@ -54,17 +55,16 @@ window.addEventListener("load", () => {
       })),
     };
 
-    console.log(`Reporting ${collectedResources.length} resources.`);
-
     // Send to backend (using Beacon)
     const blob = new Blob([JSON.stringify(payload)], {
       type: "application/json",
     });
+    // TODO: Change the URL to production url before deployment and compile this script
     navigator.sendBeacon(
       "http://localhost:3001/api/information-receiver",
       blob,
     );
-  }, 5000);
+  }, 4000);
 });
 
 function determineAssetType(url: string): string {
@@ -86,7 +86,7 @@ function determineAssetType(url: string): string {
     return "script";
   }
 
-  // 5. Fonts (CRITICAL: usually missing in basic scripts)
+  // 5. Fonts
   if (/\.(woff|woff2|ttf|otf|eot)$/i.test(cleanUrl)) {
     return "font";
   }
@@ -115,7 +115,15 @@ function determineAssetType(url: string): string {
   return "misc";
 }
 
-// TODO: Should scripts that get embedded have some sort of unique identifier? What if a user B copies the script tag from
-// user A's dashboard and uses it on their own site? The data will go to user A's account right?
+// TODO (Will think about it later): If our API url gets compromised, people can spam our backend using Postman with fake data. Should we have some sort of token system? Yes!
 
-// TODO: If our API url gets compromised, people can spam our backend using Postman with fake data. Should we have some sort of token system?
+// The most straightforward approach is to embed a unique project ID directly into the script when users download/copy it. Here are a few implementation options:
+
+// const payload: Payload = {
+//   projectId: "PROJECT_ID_PLACEHOLDER", // Replace when serving
+//   url: window.location.href,
+//   totalTransferSize: collectedResources.reduce(/*...*/),
+//   resources: collectedResources.map(/*...*/),
+// };
+
+// Then when a user requests the script, you'd replace PROJECT_ID_PLACEHOLDER with their actual project ID.
