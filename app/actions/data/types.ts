@@ -1,7 +1,7 @@
 type Type_AddProjectData = {
   name: string;
   url: string;
-  ownerEmail: string; // The email of the user who created the project
+  createdBy: string; // The id of the user who created the project
 };
 
 type Type_AddProjectResponse =
