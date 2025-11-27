@@ -43,7 +43,7 @@ type Type_GetAllProjectNamesResponse =
     }
   | {
       errorOccurred: false;
-      projectNames: { name: string; projectID: string }[];
+      projectNamesAndIDs: { name: string; projectID: string }[];
     };
 
 export type {

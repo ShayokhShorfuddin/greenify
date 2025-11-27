@@ -81,25 +81,20 @@ function ModalContent({
   const form = useForm({
     defaultValues: {
       projectName: "",
-      projectUrl: "",
+      projectURL: "",
     },
 
-    // TODO: Call database right?
     onSubmit: async ({ value }) => {
-      const projectUrl = value.projectUrl.toLowerCase().trim();
+      const projectName = value.projectName.trim();
+      const projectURL = value.projectURL.toLowerCase().trim();
 
       // Clear any previous insertion failure message
       setError(null);
 
-      // Get the email of the user
-      const { data: session } = await authClient.getSession();
-      const ownerEmail = session?.user.email as string;
+      // Get the ID of the user
+      const userID = (await authClient.getSession()).data?.user.id as string;
 
-      const response = await addProject({
-        name: value.projectName,
-        url: projectUrl,
-        ownerEmail: ownerEmail,
-      });
+      const response = await addProject({ userID, projectName, projectURL });
 
       // If insertion failed
       if (response.errorOccurred) {
@@ -175,7 +170,7 @@ function ModalContent({
         />
 
         <form.Field
-          name="projectUrl"
+          name="projectURL"
           validators={{
             onChange: ({ value }) => {
               // The user must be editing their project URL after realizing it already exists. So we clear the error message. Otherwise, the error message will stay at the bottom while they are editing, which is kinda odd.

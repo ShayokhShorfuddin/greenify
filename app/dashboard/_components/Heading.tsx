@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import Image from "next/image";
-import { getAllProjectNames } from "@/app/actions/data/projects";
+import { getAllProjectNamesAndIDs } from "@/app/actions/data/projects";
 import { auth } from "@/lib/auth";
 import download from "@/public/svgs/download.svg";
 import { NewProjectButton } from "./NewProjectButton";
@@ -12,13 +12,15 @@ export async function Heading({ projectID }: { projectID?: string }) {
     headers: await headers(),
   });
 
-  // Get user session, first name and email
+  // Get user id and firstname
+  const userID = session?.user.email as string;
   const userName = session?.user.name || "Guest";
   const firstName = userName.split(" ")[0];
-  const userEmail = session?.user.email;
 
   // Create a promise to get user's projects
-  const getAllProjectNamesPromise = getAllProjectNames(userEmail as string);
+  const getAllProjectNamesAndIDsPromise = getAllProjectNamesAndIDs({
+    userID,
+  });
 
   return (
     <header className="p-2 font-sans">
@@ -28,7 +30,7 @@ export async function Heading({ projectID }: { projectID?: string }) {
         <div className="flex gap-x-2 items-center">
           <Select
             projectID={projectID}
-            getAllProjectNamesPromise={getAllProjectNamesPromise}
+            getAllProjectNamesAndIDsPromise={getAllProjectNamesAndIDsPromise}
           />
 
           {/* Export button */}
@@ -40,6 +42,7 @@ export async function Heading({ projectID }: { projectID?: string }) {
             <Image src={download} alt="Export" className="size-3.5" />
             Export
           </button>
+
           <NewProjectButton />
         </div>
       </div>
