@@ -1,4 +1,3 @@
-// import QueryProvider from "./_components/QueryProvider";
 import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
 

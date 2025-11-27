@@ -1,9 +1,3 @@
-type Type_AddProjectData = {
-  name: string;
-  url: string;
-  createdBy: string; // The id of the user who created the project
-};
-
 type Type_AddProjectResponse =
   | {
       errorOccurred: true;
@@ -47,7 +41,6 @@ type Type_GetAllProjectNamesResponse =
     };
 
 export type {
-  Type_AddProjectData,
   Type_AddProjectResponse,
   Type_GetProjectByIDResponse,
   Type_GetAllProjectNamesResponse,
