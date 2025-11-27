@@ -69,9 +69,12 @@ export async function getAllProjectNamesAndIDs({
   try {
     const db = getDB();
 
+    console.log("Fetching projects for userID:", userID);
     const projectsCreatedByUser = await db.query.project.findMany({
       where: eq(project.createdBy, userID),
     });
+
+    console.log("Projects created by user:", projectsCreatedByUser);
 
     return {
       errorOccurred: false,

@@ -13,7 +13,7 @@ export async function Heading({ projectID }: { projectID?: string }) {
   });
 
   // Get user id and firstname
-  const userID = session?.user.email as string;
+  const userID = session?.user.id as string;
   const userName = session?.user.name || "Guest";
   const firstName = userName.split(" ")[0];
 

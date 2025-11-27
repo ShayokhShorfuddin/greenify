@@ -13,6 +13,8 @@ export function Select({
 }) {
   const response = use(getAllProjectNamesAndIDsPromise);
 
+  console.log("Select component response:", response);
+
   //  If we faced an issue while fetching project names
   if (!response || response.errorOccurred) {
     return <p className="text-red-500 text-sm">Failed to load projects.</p>;
