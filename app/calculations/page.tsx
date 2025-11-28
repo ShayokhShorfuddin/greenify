@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import KWH from "./_components/KWH";
 import PUE from "./_components/PUE";
 import SCI from "./_components/SCI";
+import TotalCO2e from "./_components/TotalCO2e";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -21,6 +22,7 @@ export default function Page() {
         <SCI />
         <PUE />
         <KWH />
+        <TotalCO2e />
       </section>
     </main>
   );

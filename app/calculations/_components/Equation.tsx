@@ -4,13 +4,14 @@
 "use client";
 
 import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 export default function Equation({
   equation,
   equationName,
   parameters,
 }: {
-  equation: string;
+  equation: string | string[];
   equationName: string;
   parameters: {
     parameter: string;
@@ -20,9 +21,17 @@ export default function Equation({
 }) {
   return (
     <>
-      <p className="py-1 px-2.5 border rounded border-audit-card-border mt-2 text-xs font-mono ">
-        {equation}
-      </p>
+      {typeof equation === "string" ? (
+        <p className="py-1 px-2.5 border rounded border-audit-card-border mt-2 text-xs font-mono">
+          {equation}
+        </p>
+      ) : (
+        <div className="flex flex-col gap-y-2 py-1 px-2.5 border rounded border-audit-card-border mt-2 text-xs font-mono">
+          {equation.map((line, index) => (
+            <p key={index}>{line}</p>
+          ))}
+        </div>
+      )}
 
       <div className="flex items-center justify-between mt-3 gap-x-6">
         <p className="text-sm underline">Parameters</p>
@@ -31,6 +40,8 @@ export default function Equation({
           {parameters.map((parameter, index) => (
             <a
               key={index}
+              data-tooltip-id={`${equationName}-parameter-tooltip`}
+              data-tooltip-html={`<span class='text-green-400 font-semibold'>${parameter.fullForm}</span><br />${parameter.description}`}
               className={`${equationName}-parameter-${index} text-xs font-mono underline hover:decoration-green-400 hover:text-green-400 transition hover:cursor-default select-none p-1.5`}
             >
               {parameter.parameter}
@@ -39,16 +50,11 @@ export default function Equation({
         </div>
       </div>
 
-      {/* TODO: Read https://react-tooltip.com/docs/troubleshooting before fixing it*/}
-      {/* <Tooltip
-        anchorSelect={`.${equationName}-parameter-${index}`}
+      <Tooltip
+        id={`${equationName}-parameter-tooltip`}
         className="max-w-72"
-      >
-        <span className="text-green-400">{parameter.fullForm}</span> <br />
-        {parameter.description}
-      </Tooltip> */}
-
-      {/* TODO: After done, do Amortization */}
+        place="top"
+      />
     </>
   );
 }
