@@ -12,19 +12,16 @@ export default function TotalCO2e() {
 
   const TotalCO2eSchema = z.object({
     energyUsedByServicesInCloud: z.number().gt(0, {
-      message:
-        "Please enter the amount of energy consumed by your cloud services (kWh).",
+      message: "Energy used by cloud services should be greater than 0.",
     }),
-    PUE: z
-      .number()
-      .gt(0, { message: "Please enter the PUE of the cloud provider." }),
-
+    PUE: z.number().gt(0, {
+      message: "PUE of the cloud provider should be greater than 0.",
+    }),
     gridEmission: z.number().gt(0, {
-      message: "Please enter the grid emission (metric tons CO₂e per kWh).",
+      message: "Grid emission should be greater than 0.",
     }),
-
     embodiedEmission: z.number().gt(0, {
-      message: "Please enter the embodied emissions (metric tons CO₂e).",
+      message: "Embodied emission should be greater than 0.",
     }),
   });
 

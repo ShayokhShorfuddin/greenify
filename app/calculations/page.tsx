@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Amortization from "./_components/Amortization";
 import KWH from "./_components/KWH";
 import PUE from "./_components/PUE";
 import SCI from "./_components/SCI";
@@ -22,6 +23,7 @@ export default function Page() {
         <SCI />
         <PUE />
         <KWH />
+        <Amortization />
         <TotalCO2e />
       </section>
     </main>

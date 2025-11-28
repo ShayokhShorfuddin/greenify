@@ -7,39 +7,43 @@ import z from "zod";
 import { ErrorInfo } from "@/shared/ErrorInfo";
 import Equation from "./Equation";
 
-export default function KWH() {
+export default function Amortization() {
   const [result, setResult] = useState<number | null>(null);
 
-  const KWHSchema = z.object({
-    watts: z.number().gt(0, { message: "Power should be greater than 0." }),
-    hours: z.number().gt(0, { message: "Hours should be greater than 0." }),
+  const AmortizationSchema = z.object({
+    embodiedCarbonCost: z
+      .number()
+      .gt(0, { message: "Embodied carbon cost should be greater than 0." }),
+    expectedLifetime: z
+      .number()
+      .gt(0, { message: "Expected lifetime should be greater than 0." }),
   });
 
   const form = useForm({
     defaultValues: {
-      watts: 0,
-      hours: 0,
+      embodiedCarbonCost: 0,
+      expectedLifetime: 0,
     },
 
     validators: {
-      onChange: KWHSchema,
+      onChange: AmortizationSchema,
     },
 
     onSubmit: ({ value }) => {
-      const { watts, hours } = value;
+      const { embodiedCarbonCost, expectedLifetime } = value;
 
-      // kWh = (W × h) / 1000
-      setResult(Number(((watts * hours) / 1000).toFixed(3)));
+      // Amortization = EC / EL
+      setResult(Number((embodiedCarbonCost / expectedLifetime).toFixed(3)));
     },
   });
 
   return (
     <div className="p-3 rounded bg-audit-card-background border border-audit-card-border">
-      <p>Kilowatt-hour (kWh)</p>
+      <p>Amortization</p>
 
       <Equation
-        equation="kWh = (W * h) / 1000"
-        equationName="kWh"
+        equation="Amortized Value = EC / EL"
+        equationName="Amortization"
         parameters={parameters}
       />
 
@@ -51,14 +55,14 @@ export default function KWH() {
         }}
       >
         <form.Field
-          name="watts"
+          name="embodiedCarbonCost"
           children={(field) => (
             <>
-              <p className="mt-2.5 text-xs">Watts (W)</p>
+              <p className="mt-2.5 text-xs">Embodied carbon cost (kg CO₂e)</p>
               <input
                 type="number"
                 step={"any"}
-                name="watts"
+                name="embodiedCarbonCost"
                 value={field.state.value}
                 onChange={(e) => {
                   setResult(null);
@@ -73,14 +77,14 @@ export default function KWH() {
         />
 
         <form.Field
-          name="hours"
+          name="expectedLifetime"
           children={(field) => (
             <>
-              <p className="mt-2.5 text-xs">Hours (h)</p>
+              <p className="mt-2.5 text-xs">Expected lifetime (years)</p>
               <input
                 type="number"
                 step={"any"}
-                name="hours"
+                name="expectedLifetime"
                 value={field.state.value}
                 onChange={(e) => {
                   setResult(null);
@@ -98,7 +102,7 @@ export default function KWH() {
           <div className="flex items-center justify-between mt-2.5">
             <p className="text-sm text-green-500">Result:</p>
 
-            <p className="text-sm">{result} kWh</p>
+            <p className="text-sm">{result} kg CO₂e/year</p>
           </div>
         )}
 
@@ -111,7 +115,7 @@ export default function KWH() {
                 disabled={!canSubmit || isSubmitting}
                 className="w-full relative bg-green-500 py-1 px-3 rounded text-white text-sm font-medium select-none transition-all duration-50 ease-in-out hover:cursor-pointer shadow-[0_3px_0_0_#008236] xs:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0_0_0_0_#008236]"
               >
-                {isSubmitting ? "Computing..." : "Compute kWh"}
+                {isSubmitting ? "Computing..." : "Compute Amortized Value"}
               </button>
             )}
           />
@@ -134,15 +138,15 @@ export default function KWH() {
 
 const parameters = [
   {
-    parameter: "W",
-    fullForm: "Watts",
+    parameter: "EC",
+    fullForm: "Embodied carbon",
     description:
-      "A measure of the rate at which energy is produced, transferred, or consumed. It's also the standard unit of power in the International System of Units (SI).",
+      "The greenhouse gases released during the manufacturing and disposal of the physical hardware (servers, storage devices, etc.) that make up the data center.",
   },
   {
-    parameter: "h",
-    fullForm: "Hours",
+    parameter: "EL",
+    fullForm: "Expected lifetime",
     description:
-      "Indicates the duration for which the power is consumed or produced.",
+      "The period of time, usually measured in years, that a device is anticipated to be functional, perform its intended purpose, and remain structurally sound before it needs significant replacement.",
   },
 ];

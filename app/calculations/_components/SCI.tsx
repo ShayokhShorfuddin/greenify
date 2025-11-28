@@ -11,11 +11,15 @@ export default function SCI() {
   const [result, setResult] = useState<number | null>(null);
 
   const SCISchema = z.object({
-    energy: z.number().min(0, { message: "Please enter energy consumed." }),
-    carbonIntensity: z.number().min(0, { message: "Please enter intensity." }),
+    energy: z
+      .number()
+      .gt(0, { message: "Energy consumed should be greater than 0." }),
+    carbonIntensity: z
+      .number()
+      .gt(0, { message: "Carbon intensity should be greater than 0." }),
     embodiedCarbon: z
       .number()
-      .min(0, { message: "Please enter embodied carbon." }),
+      .gt(0, { message: "Embodied carbon should be greater than 0." }),
     functionalUnit: z
       .string()
       .min(1, { message: "Please enter functional unit." }),

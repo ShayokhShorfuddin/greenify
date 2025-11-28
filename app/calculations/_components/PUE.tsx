@@ -17,10 +17,10 @@ export default function PUE() {
     .object({
       totalFacilityEnergy: z
         .number()
-        .gt(0, { message: "Please enter total facility energy." }),
+        .gt(0, { message: "Total facility energy should be greater than 0." }),
       equipmentEnergy: z
         .number()
-        .gt(0, { message: "Please enter equipment energy." }),
+        .gt(0, { message: "Equipment energy should be greater than 0." }),
     })
     .refine((data) => data.totalFacilityEnergy >= data.equipmentEnergy, {
       message:
@@ -121,7 +121,7 @@ export default function PUE() {
                     className="size-7 p-2 hover:cursor-default transition"
                   />
                 </a>
-                <p className="text-sm">{result}</p>
+                <p className="text-sm">PUE {result}</p>
               </div>
             </div>
           )}
