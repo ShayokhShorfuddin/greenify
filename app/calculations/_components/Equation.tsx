@@ -52,6 +52,9 @@ export default function Equation({
 
       <Tooltip
         id={`${equationName}-parameter-tooltip`}
+        style={{
+          zIndex: 2,
+        }}
         className="max-w-72"
         place="top"
       />

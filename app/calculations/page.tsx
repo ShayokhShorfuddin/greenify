@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Footer from "../_components/Footer";
 import Amortization from "./_components/Amortization";
 import KWH from "./_components/KWH";
 import PUE from "./_components/PUE";
 import SCI from "./_components/SCI";
 import TotalCO2e from "./_components/TotalCO2e";
+import UnitConverter from "./_components/UnitConverter";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -19,13 +21,17 @@ export default function Page() {
       {/*TODO: Edit later */}
       <p>All equations are given here</p>
 
-      <section className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-rows-1 gap-5 mt-8 px-[1.2rem] font-sans">
+      <section className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-rows-1 gap-5 mt-8 px-[1.2rem] font-sans mb-12">
+        {/* TODO: after all math components are done, feel free to rearrange them and see which arrangement looks more visually appealing */}
         <SCI />
         <PUE />
         <KWH />
         <Amortization />
         <TotalCO2e />
+        <UnitConverter />
       </section>
+
+      <Footer />
     </main>
   );
 }

@@ -156,7 +156,7 @@ export default function TotalCO2e() {
           children={(field) => (
             <>
               <p className="mt-2.5 text-xs">
-                Embodied emission (Metric tons CO₂e)
+                Embodied emission (metric tons CO₂e)
               </p>
               <input
                 type="number"
