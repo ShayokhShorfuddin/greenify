@@ -7,9 +7,11 @@ import { Tooltip } from "react-tooltip";
 
 export default function Equation({
   equation,
+  equationName,
   parameters,
 }: {
   equation: string;
+  equationName: string;
   parameters: {
     parameter: string;
     fullForm: string;
@@ -29,7 +31,7 @@ export default function Equation({
           {parameters.map((parameter, index) => (
             <a
               key={index}
-              className={`parameter-${index} text-xs font-mono underline hover:decoration-green-400 hover:text-green-400 transition hover:cursor-default select-none p-1.5`}
+              className={`${equationName}-parameter-${index} text-xs font-mono underline hover:decoration-green-400 hover:text-green-400 transition hover:cursor-default select-none p-1.5`}
             >
               {parameter.parameter}
             </a>
@@ -40,7 +42,7 @@ export default function Equation({
       {parameters.map((parameter, index) => (
         <Tooltip
           key={index}
-          anchorSelect={`.parameter-${index}`}
+          anchorSelect={`.${equationName}-parameter-${index}`}
           className="max-w-72"
         >
           <span className="text-green-400">{parameter.fullForm}</span> <br />

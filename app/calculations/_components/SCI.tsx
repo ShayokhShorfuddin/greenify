@@ -37,7 +37,7 @@ export default function SCI() {
       const { energy, carbonIntensity, embodiedCarbon } = value;
 
       //   SCI = ((E * I) + M) per R
-      setResult(energy * carbonIntensity + embodiedCarbon);
+      setResult(Number((energy * carbonIntensity + embodiedCarbon).toFixed(3)));
     },
   });
 
@@ -45,7 +45,11 @@ export default function SCI() {
     <div className="p-3 rounded bg-audit-card-background border border-audit-card-border">
       <p>Software Carbon Intensity (SCI)</p>
 
-      <Equation equation="SCI = ((E * I) + M) per R" parameters={parameters} />
+      <Equation
+        equation="SCI = ((E * I) + M) per R"
+        equationName="SCI"
+        parameters={parameters}
+      />
 
       <form
         onSubmit={(e) => {
