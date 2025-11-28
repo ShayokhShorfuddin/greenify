@@ -39,16 +39,16 @@ export default function Equation({
         </div>
       </div>
 
-      {parameters.map((parameter, index) => (
-        <Tooltip
-          key={index}
-          anchorSelect={`.${equationName}-parameter-${index}`}
-          className="max-w-72"
-        >
-          <span className="text-green-400">{parameter.fullForm}</span> <br />
-          {parameter.description}
-        </Tooltip>
-      ))}
+      {/* TODO: Read https://react-tooltip.com/docs/troubleshooting before fixing it*/}
+      {/* <Tooltip
+        anchorSelect={`.${equationName}-parameter-${index}`}
+        className="max-w-72"
+      >
+        <span className="text-green-400">{parameter.fullForm}</span> <br />
+        {parameter.description}
+      </Tooltip> */}
+
+      {/* TODO: After done, do Amortization */}
     </>
   );
 }

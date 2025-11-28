@@ -173,7 +173,7 @@ export default function SCI() {
 
           <button
             type="button"
-            className="py-1 px-3 rounded text-neutral-600 underline text-sm hover:cursor-pointer"
+            className="py-1 px-3 rounded text-neutral-600 underline text-sm cursor-pointer"
             onClick={() => {
               setResult(null);
               form.reset();
