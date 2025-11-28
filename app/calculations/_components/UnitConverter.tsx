@@ -86,7 +86,7 @@ export default function UnitConverter() {
               <p className="mt-2.5 text-xs">Amount</p>
               <input
                 type="number"
-                step={"any"}
+                step="any"
                 name="amount"
                 value={field.state.value}
                 onChange={(e) => {

@@ -5,6 +5,7 @@ import KWH from "./_components/KWH";
 import PUE from "./_components/PUE";
 import SCI from "./_components/SCI";
 import TotalCO2e from "./_components/TotalCO2e";
+import TransferEmission from "./_components/TransferEmission";
 import UnitConverter from "./_components/UnitConverter";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -29,6 +30,7 @@ export default function Page() {
         <Amortization />
         <TotalCO2e />
         <UnitConverter />
+        <TransferEmission />
       </section>
 
       <Footer />

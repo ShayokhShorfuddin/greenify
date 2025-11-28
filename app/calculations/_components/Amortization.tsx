@@ -61,7 +61,7 @@ export default function Amortization() {
               <p className="mt-2.5 text-xs">Embodied carbon cost (kg CO₂e)</p>
               <input
                 type="number"
-                step={"any"}
+                step="any"
                 name="embodiedCarbonCost"
                 value={field.state.value}
                 onChange={(e) => {
@@ -83,7 +83,7 @@ export default function Amortization() {
               <p className="mt-2.5 text-xs">Expected lifetime (years)</p>
               <input
                 type="number"
-                step={"any"}
+                step="any"
                 name="expectedLifetime"
                 value={field.state.value}
                 onChange={(e) => {

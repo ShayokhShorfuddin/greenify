@@ -92,7 +92,7 @@ export default function TotalCO2e() {
               </p>
               <input
                 type="number"
-                step={"any"}
+                step="any"
                 name="energyUsedByServicesInCloud"
                 value={field.state.value}
                 onChange={(e) => {
@@ -114,7 +114,7 @@ export default function TotalCO2e() {
               <p className="mt-2.5 text-xs">Power usage effectiveness (PUE)</p>
               <input
                 type="number"
-                step={"any"}
+                step="any"
                 name="PUE"
                 value={field.state.value}
                 onChange={(e) => {
@@ -136,7 +136,7 @@ export default function TotalCO2e() {
               <p className="mt-2.5 text-xs">Grid emission (metric tons CO₂e)</p>
               <input
                 type="number"
-                step={"any"}
+                step="any"
                 name="gridEmission"
                 value={field.state.value}
                 onChange={(e) => {
@@ -160,7 +160,7 @@ export default function TotalCO2e() {
               </p>
               <input
                 type="number"
-                step={"any"}
+                step="any"
                 name="embodiedEmission"
                 value={field.state.value}
                 onChange={(e) => {

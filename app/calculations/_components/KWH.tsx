@@ -57,7 +57,7 @@ export default function KWH() {
               <p className="mt-2.5 text-xs">Watts (W)</p>
               <input
                 type="number"
-                step={"any"}
+                step="any"
                 name="watts"
                 value={field.state.value}
                 onChange={(e) => {
@@ -79,7 +79,7 @@ export default function KWH() {
               <p className="mt-2.5 text-xs">Hours (h)</p>
               <input
                 type="number"
-                step={"any"}
+                step="any"
                 name="hours"
                 value={field.state.value}
                 onChange={(e) => {

@@ -71,7 +71,7 @@ export default function PUE() {
                 <p className="mt-2.5 text-xs">Total facility energy (kWh)</p>
                 <input
                   type="number"
-                  step={"any"}
+                  step="any"
                   name="totalFacilityEnergy"
                   value={field.state.value}
                   onChange={(e) => {
@@ -93,7 +93,7 @@ export default function PUE() {
                 <p className="mt-2.5 text-xs">Equipment energy (kWh)</p>
                 <input
                   type="number"
-                  step={"any"}
+                  step="any"
                   name="equipmentEnergy"
                   value={field.state.value}
                   onChange={(e) => {

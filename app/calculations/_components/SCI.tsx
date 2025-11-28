@@ -69,7 +69,7 @@ export default function SCI() {
               <p className="mt-2.5 text-xs">Energy consumed (kWh)</p>
               <input
                 type="number"
-                step={"any"}
+                step="any"
                 name="energy"
                 value={field.state.value}
                 onChange={(e) => {
@@ -91,7 +91,7 @@ export default function SCI() {
               <p className="mt-2.5 text-xs">Carbon intensity (gCO2e/kWh)</p>
               <input
                 type="number"
-                step={"any"}
+                step="any"
                 name="carbonIntensity"
                 value={field.state.value}
                 onChange={(e) => {
@@ -113,7 +113,7 @@ export default function SCI() {
               <p className="mt-2.5 text-xs">Embodied carbon (kg)</p>
               <input
                 type="number"
-                step={"any"}
+                step="any"
                 name="embodiedCarbon"
                 value={field.state.value}
                 onChange={(e) => {
@@ -135,7 +135,7 @@ export default function SCI() {
               <p className="mt-2.5 text-xs">Functional unit</p>
               <input
                 type="text"
-                step={"any"}
+                step="any"
                 name="functionalUnit"
                 value={field.state.value}
                 placeholder="e.g. per user per device or per API call."
