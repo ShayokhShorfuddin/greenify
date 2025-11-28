@@ -13,6 +13,7 @@ import eye from "@/public/svgs/eye.svg";
 import eye_closed from "@/public/svgs/eye-closed.svg";
 import Google from "@/public/svgs/google.svg";
 import guy_working_on_his_laptop2 from "@/public/svgs/guy-working-on-laptop2.svg";
+import { ErrorInfo } from "@/shared/ErrorInfo";
 
 const signInSchema = z.object({
   email: z
@@ -214,21 +215,6 @@ function PasswordField({
       {authErrorMessage !== "" ? (
         <p className="text-red-500 text-sm">{authErrorMessage}</p>
       ) : null}
-    </>
-  );
-}
-
-function ErrorInfo({ field }: { field: AnyFieldApi }) {
-  return (
-    <>
-      {field.state.meta.isTouched &&
-      !field.state.meta.isValid &&
-      field.state.meta.errors.length > 0 ? (
-        <p className="text-red-500 text-sm">
-          {field.state.meta.errors[0].message}
-        </p>
-      ) : null}
-      {field.state.meta.isValidating ? "Validating..." : null}
     </>
   );
 }

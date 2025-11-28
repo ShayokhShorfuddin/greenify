@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/correctness/noChildrenProp: <required for Tanstack form> */
 "use client";
 
-import { type AnyFieldApi, useForm } from "@tanstack/react-form";
+import { useForm } from "@tanstack/react-form";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -11,6 +11,7 @@ import getAuthErrorMessage from "@/app/_utils/auth-error-messages";
 import { authClient } from "@/lib/auth-client";
 import google from "@/public/svgs/google.svg";
 import guy_working_on_his_laptop3 from "@/public/svgs/guy-working-on-laptop3.svg";
+import { ErrorInfo } from "@/shared/ErrorInfo";
 
 const signUpSchema = z
   .object({
@@ -224,20 +225,5 @@ export function SignUp() {
         />
       </div>
     </section>
-  );
-}
-
-function ErrorInfo({ field }: { field: AnyFieldApi }) {
-  return (
-    <>
-      {field.state.meta.isTouched &&
-      !field.state.meta.isValid &&
-      field.state.meta.errors.length > 0 ? (
-        <p className="text-red-500 text-sm">
-          {field.state.meta.errors[0].message}
-        </p>
-      ) : null}
-      {field.state.meta.isValidating ? "Validating..." : null}
-    </>
   );
 }
