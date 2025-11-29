@@ -39,6 +39,7 @@ window.addEventListener("load", () => {
 
     const payload: Payload = {
       // TODO: This is supposed to be set automatically when we hand over the script to users. Hardcoded for now for testing.
+      // TODO: What if this id gets leaked and people spam our backend with fake data? Do deep research on it.
       projectId: "69243a4c425a03c34c76a53e",
 
       totalTransferSize: collectedResources.reduce(

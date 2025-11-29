@@ -18,7 +18,7 @@ export function CTA() {
 
         <div className="flex flex-col items-center sm:items-start text-center sm:text-start gap-y-2">
           <p className="text-2xl font-medium">
-            Let's Build <span className="text-green-500">Green</span>, Together
+            Let's Build <span className="text-green-500">Green</span> Together
             <span className="text-green-500">.</span>
           </p>
 

@@ -13,8 +13,8 @@ import UnitConverter from "./_components/UnitConverter";
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Greenify | Calculations",
-    // TODO: Edit later
-    description: "Compute stuff.",
+    description:
+      "Compute various environmental impact calculations with Greenify.",
   };
 }
 

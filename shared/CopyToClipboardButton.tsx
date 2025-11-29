@@ -47,6 +47,8 @@ export function CopyToClipboardButton({
     <button
       type="button"
       onClick={handleClick}
+      aria-label="Copy to clipboard"
+      aria-live="polite"
       className={`p-1.5 bg-neutral-100 rounded hover:bg-neutral-200 transition hover:cursor-pointer ${className ?? ""}`}
     >
       <Image src={icon} alt="Clipboard status" className="size-3.5" />

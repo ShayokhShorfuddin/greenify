@@ -28,8 +28,7 @@ export function Select({
   if (!response.errorOccurred && response.projectNamesAndIDs.length > 0) {
     return (
       <select
-        name=""
-        id=""
+        name="select-project"
         className="hover:cursor-pointer"
         value={projectID ? projectID : ""}
         onChange={(e) => {

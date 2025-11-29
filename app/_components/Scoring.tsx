@@ -15,7 +15,7 @@ export function Scoring() {
           <p className="text-sm mt-2 text-neutral-700 xs:text-base max-w-md">
             Every single Greenify audit generates a comprehensive report along
             with actionable steps to improve your website's sustainability. Want
-            to export your reports? We have got you covered with tons of file
+            to export your reports? We've got you covered with tons of file
             formats including PDF, CSV, JSON, HTML, XML, Markdown, even MS Word.
             You name it!
           </p>

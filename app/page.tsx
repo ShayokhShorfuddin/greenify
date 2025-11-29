@@ -4,7 +4,7 @@ import { CTA } from "./_components/CTA";
 import FAQ from "./_components/FAQ";
 import Footer from "./_components/Footer";
 import Hero from "./_components/Hero";
-import { Insight } from "./_components/Insights";
+import { Insights } from "./_components/Insights";
 import Navbar from "./_components/Navbar";
 import { Scoring } from "./_components/Scoring";
 
@@ -35,7 +35,7 @@ export default async function Page() {
     <main>
       <Navbar />
       <Hero />
-      <Insight />
+      <Insights />
       <CarbonTxtSupport />
       <Scoring />
       <FAQ />

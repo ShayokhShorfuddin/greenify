@@ -12,6 +12,12 @@ import type {
   Type_GetProjectByIDResponse,
 } from "./types";
 
+// TODO: Major fix required here
+// File: projects.ts
+// Issue: The functions addProject, getAllProjectNamesAndIDs, and getProjectByID accept userID as a client-provided argument.
+// Risk: This is a severe Insecure Direct Object Reference (IDOR) vulnerability. A malicious user can call these actions with any userID to create projects on behalf of others or view their private project names.
+// Fix: Do not accept userID as an argument. Instead, retrieve the authenticated user's session inside the Server Action using auth.api.getSession (or your auth.ts equivalent) and use the ID from the session.
+
 // Add a new project
 export async function addProject({
   userID,
