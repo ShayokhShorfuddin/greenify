@@ -16,6 +16,7 @@ export function CarbonTxtSupport() {
               href="https://www.thegreenwebfoundation.org/"
               target="_blank"
               className="underline"
+              rel="noopener noreferrer"
             >
               Green Web Foundation
             </Link>

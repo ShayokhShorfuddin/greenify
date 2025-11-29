@@ -1,0 +1,1 @@
+- I log errors using `logger.error()`. Instead of suggesting `logger.error("text_goes_here:", error);`, I want you to use template literals like this: `logger.error(`text_goes_here: ${error}`);`

@@ -2,13 +2,17 @@ import { CarbonTxtIsNotReachableText, ErrorOccurredText } from "@/shared/texts";
 import type { Type_GreenHostAPIResponse } from "../_components/_audit-result-components/_audit2/GreenHostCardContent";
 import type { Type_IPToCo2IntensityAPIResponse } from "../_components/_audit-result-components/_audit3/IPToCo2IntensityCardContent";
 import type { Type_ExamineCarbonTxtFile } from "../actions/audits/carbontxt-file-examination";
+import type { Type_MeasurePingResponse } from "./measure-ping-response";
+
+// TODO: Rewrite this. Just a parameter like "formatFor", which can "ExamineCarbonTxtFile", "GreenHostAPIResponse", "IPToCo2IntensityAPIResponse", "MeasurePingResponse" would be better. This formatFor should be an enum or a | type
 
 type Type_CopyableTextParams = {
   url: string;
   result:
     | Type_ExamineCarbonTxtFile
     | Type_GreenHostAPIResponse
-    | Type_IPToCo2IntensityAPIResponse;
+    | Type_IPToCo2IntensityAPIResponse
+    | Type_MeasurePingResponse;
 };
 
 export function copyableText({ url, result }: Type_CopyableTextParams): string {
@@ -22,6 +26,10 @@ export function copyableText({ url, result }: Type_CopyableTextParams): string {
 
   if (result.kind === "IPToCo2IntensityAPIResponse") {
     return generateTextForIPToCo2IntensityAPIResponse({ result });
+  }
+
+  if (result.kind === "MeasurePingResponse") {
+    return `${result.responseTimeMs} ms`;
   }
 
   // Likely won't reach here, but just in case and to satisfy TypeScript

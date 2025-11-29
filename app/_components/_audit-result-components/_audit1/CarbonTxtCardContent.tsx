@@ -102,6 +102,7 @@ export async function CarbonTxtCardContent({ url }: { url: string }) {
                   className="text-sm text-neutral-500 hover:underline break-all pr-6"
                   href={disclosure.url}
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {disclosure.url}
                 </Link>
@@ -128,8 +129,12 @@ export async function CarbonTxtCardContent({ url }: { url: string }) {
       )}
 
       {/* carbon.txt file URL */}
-      <Link href={`${url}/carbon.txt`} target="_blank">
-        <p className="mt-2 text-sm text-blue-500 underline break-words overflow-hidden">{`${url}/carbon.txt`}</p>
+      <Link
+        href={`${url}/carbon.txt`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <p className="mt-2 text-sm text-blue-500 underline wrap-break-word overflow-hidden">{`${url}/carbon.txt`}</p>
       </Link>
     </>
   );

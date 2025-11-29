@@ -46,6 +46,7 @@ URL: https://www.thegreenwebfoundation.org/carbon.txt`}
           <div className="flex items-center justify-between">
             <Link
               target="_blank"
+              rel="noopener noreferrer"
               className="text-sm text-neutral-500 hover:underline break-all pr-6"
               href="https://www.techcarbonstandard.org/case-studies/green-web-foundation/overview"
             >
@@ -58,6 +59,7 @@ URL: https://www.thegreenwebfoundation.org/carbon.txt`}
           <div className="flex items-center justify-between">
             <Link
               target="_blank"
+              rel="noopener noreferrer"
               className="text-sm text-neutral-500 hover:underline break-all pr-6"
               href="https://www.thegreenwebfoundation.org/.well-known/tcs.json"
             >
@@ -73,6 +75,7 @@ URL: https://www.thegreenwebfoundation.org/carbon.txt`}
       <Link
         href="https://www.thegreenwebfoundation.org/carbon.txt"
         target="_blank"
+        rel="noopener noreferrer"
       >
         <p className="mt-2 text-sm text-blue-500 underline break-all">
           https://www.thegreenwebfoundation.org/carbon.txt

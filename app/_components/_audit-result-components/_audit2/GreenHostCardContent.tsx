@@ -80,8 +80,12 @@ export async function GreenHostCardContent({ url }: { url: string }) {
             <span className="text-green-500">{result.hosted_by}</span>
           </p>
 
-          <Link href={result.hosted_by_website} target="_blank">
-            <p className="text-sm text-neutral-500 mt-1 break-words overflow-hidden">
+          <Link
+            href={result.hosted_by_website}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <p className="text-sm text-neutral-500 mt-1 wrap-break-word overflow-hidden">
               Host URL:{" "}
               <span className="text-blue-500 underline">
                 {result.hosted_by_website}
@@ -100,7 +104,11 @@ export async function GreenHostCardContent({ url }: { url: string }) {
                   <div key={index}>
                     <p className="text-neutral-700">{document.title}</p>
 
-                    <Link href={document.link} target="_blank">
+                    <Link
+                      href={document.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <p className="mt-1 text-blue-500 underline truncate">
                         {document.link}
                       </p>

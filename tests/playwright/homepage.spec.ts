@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+// TODO: Some tests failed. Fix
+
 test.describe("Homepage tests", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("http://localhost:3000/");

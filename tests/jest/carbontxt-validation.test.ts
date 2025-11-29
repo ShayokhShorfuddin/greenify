@@ -1,6 +1,6 @@
 import { validateCarbonTxt } from "@/app/_utils/carbontxt-validation";
 
-// TODO: Fix failing test
+// TODO: Fix complete test structure
 
 describe("validateCarbonTxt", () => {
   test("should fail for no content", async () => {
