@@ -24,7 +24,7 @@ export function copyableText({ url, result }: Type_CopyableTextParams): string {
     return generateTextForIPToCo2IntensityAPIResponse({ result });
   }
 
-  //   Likely won't reach here, but just in case and to satisfy TypeScript
+  // Likely won't reach here, but just in case and to satisfy TypeScript
   return "Failed to copy text.";
 }
 

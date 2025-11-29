@@ -7,8 +7,8 @@ import {
 } from "@/app/actions/audits/carbontxt-file-examination";
 import cross from "@/public/svgs/cross.svg";
 import green_tick from "@/public/svgs/green-tick.svg";
+import { CopyToClipboardButton } from "@/shared/CopyToClipboardButton";
 import { CarbonTxtIsNotReachableText, ErrorOccurredText } from "@/shared/texts";
-import { CopyToClipboardButton } from "../CopyToClipboardButton";
 
 export async function CarbonTxtCardContent({ url }: { url: string }) {
   const results: Type_ExamineCarbonTxtFile = await examineCarbonTxtFile({
@@ -29,7 +29,10 @@ export async function CarbonTxtCardContent({ url }: { url: string }) {
 
   return (
     <>
-      <CopyToClipboardButton text={copyableText({ url, result: results })} />
+      <CopyToClipboardButton
+        text={copyableText({ url, result: results })}
+        className="absolute top-2 right-2"
+      />
 
       {/* Existence */}
       <div className="flex items-center gap-2 mt-1">

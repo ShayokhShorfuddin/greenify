@@ -1,6 +1,6 @@
 import Image from "next/image";
 import usa_flag from "@/public/images/USA_flag.png";
-import { CopyToClipboardButton } from "../_audit-result-components/CopyToClipboardButton";
+import { CopyToClipboardButton } from "@/shared/CopyToClipboardButton";
 
 export function IPToCarbonIntensityCard() {
   return (
@@ -18,6 +18,7 @@ Intensity type: Avg
 Data year: 2021
 Renewable: 39.82%
 Fossil: 60.18%`}
+        className="absolute top-2 right-2"
       />
 
       <div className="mt-1 text-sm text-neutral-500">

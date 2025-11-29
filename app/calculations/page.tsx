@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Footer from "../_components/Footer";
 import Amortization from "./_components/Amortization";
+import FileSizeMeasurer from "./_components/FileSizeMeasurer";
 import KWH from "./_components/KWH";
 import PUE from "./_components/PUE";
 import SCI from "./_components/SCI";
@@ -24,13 +25,14 @@ export default function Page() {
 
       <section className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-rows-1 gap-5 mt-8 px-[1.2rem] font-sans mb-12">
         {/* TODO: after all math components are done, feel free to rearrange them and see which arrangement looks more visually appealing */}
-        <SCI />
         <PUE />
         <KWH />
+        <UnitConverter />
         <Amortization />
         <TotalCO2e />
-        <UnitConverter />
+        <SCI />
         <TransferEmission />
+        <FileSizeMeasurer />
       </section>
 
       <Footer />

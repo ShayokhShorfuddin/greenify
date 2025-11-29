@@ -1,12 +1,12 @@
 import { copyableText } from "@/app/_utils/copyable-text";
 import { getIP } from "@/app/_utils/get-ip";
 import logger from "@/logger";
+import { CopyToClipboardButton } from "@/shared/CopyToClipboardButton";
 import {
   ErrorOccurredText,
   FailedToReachAPIText,
   FailedToResolveIPText,
 } from "@/shared/texts";
-import { CopyToClipboardButton } from "../CopyToClipboardButton";
 
 export type Type_IPToCo2IntensityAPIResponse = {
   country_name: string;
@@ -61,7 +61,10 @@ export async function IPToCo2IntensityCardContent({ url }: { url: string }) {
 
   return (
     <>
-      <CopyToClipboardButton text={copyableText({ url, result })} />
+      <CopyToClipboardButton
+        text={copyableText({ url, result })}
+        className="absolute top-2 right-2"
+      />
 
       <div className="mt-1 text-sm text-neutral-500">
         <div className="flex gap-x-1 items-center">

@@ -7,7 +7,13 @@ import clipboard from "@/public/svgs/clipboard.svg";
 import cross from "@/public/svgs/cross.svg";
 import green_tick from "@/public/svgs/green-tick.svg";
 
-export function CopyToClipboardButton({ text }: { text: string }) {
+export function CopyToClipboardButton({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) {
   const [icon, setIcon] = useState(clipboard);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -41,7 +47,7 @@ export function CopyToClipboardButton({ text }: { text: string }) {
     <button
       type="button"
       onClick={handleClick}
-      className="p-1.5 bg-neutral-100 rounded absolute top-2 right-2 hover:bg-neutral-200 transition hover:cursor-pointer"
+      className={`p-1.5 bg-neutral-100 rounded hover:bg-neutral-200 transition hover:cursor-pointer ${className ?? ""}`}
     >
       <Image src={icon} alt="Clipboard status" className="size-3.5" />
     </button>

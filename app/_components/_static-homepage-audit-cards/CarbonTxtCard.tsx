@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import green_tick from "@/public/svgs/green-tick.svg";
-import { CopyToClipboardButton } from "../_audit-result-components/CopyToClipboardButton";
+import { CopyToClipboardButton } from "@/shared/CopyToClipboardButton";
 
 export function CarbonTxtCard() {
   return (
-    <div className="relative bg-audit-card-background border border-audit-card-border rounded-lg p-3 max-w-[30rem]">
+    <div className="relative bg-audit-card-background border border-audit-card-border rounded-lg p-3 max-w-120">
       {/* Audit number */}
       <small className="text-neutral-700 font-mono">Audit #1</small>
       <p className="text-[15px]">Carbon.txt file examination.</p>
@@ -19,6 +19,7 @@ Disclosures:
   - https://www.thegreenwebfoundation.org/.well-known/tcs.json: 200
 
 URL: https://www.thegreenwebfoundation.org/carbon.txt`}
+        className="absolute top-2 right-2"
       />
 
       {/* Existence */}

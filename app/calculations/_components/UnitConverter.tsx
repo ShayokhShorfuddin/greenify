@@ -2,23 +2,25 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import z from "zod";
 import { ErrorInfo } from "@/shared/ErrorInfo";
 import Equation from "./Equation";
 
 export default function UnitConverter() {
   const [result, setResult] = useState<number | null>(null);
-  const selectFromRef = useRef<HTMLSelectElement | null>(null);
-  const selectToRef = useRef<HTMLSelectElement | null>(null);
 
   const UnitConverterSchema = z.object({
     amount: z.number().min(0, { message: "Please enter an amount." }),
+    fromUnit: z.enum(["g", "kg", "t"]),
+    toUnit: z.enum(["g", "kg", "t"]),
   });
 
   const form = useForm({
     defaultValues: {
       amount: 0,
+      fromUnit: "g",
+      toUnit: "kg",
     },
 
     validators: {
@@ -26,9 +28,7 @@ export default function UnitConverter() {
     },
 
     onSubmit: ({ value }) => {
-      const { amount } = value;
-      const fromUnit = selectFromRef.current?.value;
-      const toUnit = selectToRef.current?.value;
+      const { amount, fromUnit, toUnit } = value;
 
       // First, convert the input amount to grams (base unit)
       let amountInGrams: number;
@@ -105,31 +105,55 @@ export default function UnitConverter() {
           <div className="flex flex-col gap-y-1">
             <p className="text-xs">From</p>
 
-            <select
-              name="select-from"
-              ref={selectFromRef}
-              defaultValue="g"
-              className="py-1 px-2 text-sm w-full border border-neutral-300 focus:outline-none focus:border-green-500 rounded"
-            >
-              <option value="g">Gram (g)</option>
-              <option value="kg">Kilogram (kg)</option>
-              <option value="t">Metric Ton (t)</option>
-            </select>
+            <form.Field
+              name="fromUnit"
+              children={(field) => (
+                <>
+                  <select
+                    name="select-from"
+                    value={field.state.value}
+                    onChange={(e) => {
+                      setResult(null);
+                      field.handleChange(e.target.value);
+                    }}
+                    className="py-1 px-2 text-sm w-full border border-neutral-300 focus:outline-none focus:border-green-500 rounded"
+                  >
+                    <option value="g">Gram (g)</option>
+                    <option value="kg">Kilogram (kg)</option>
+                    <option value="t">Metric Ton (t)</option>
+                  </select>
+
+                  <ErrorInfo field={field} />
+                </>
+              )}
+            />
           </div>
 
           <div className="flex flex-col gap-y-1">
             <p className="text-xs">To</p>
 
-            <select
-              name="select-to"
-              ref={selectToRef}
-              defaultValue="kg"
-              className="py-1 px-2 text-sm w-full border border-neutral-300 focus:outline-none focus:border-green-500 rounded"
-            >
-              <option value="g">Gram (g)</option>
-              <option value="kg">Kilogram (kg)</option>
-              <option value="t">Metric Ton (t)</option>
-            </select>
+            <form.Field
+              name="toUnit"
+              children={(field) => (
+                <>
+                  <select
+                    name="select-to"
+                    value={field.state.value}
+                    onChange={(e) => {
+                      setResult(null);
+                      field.handleChange(e.target.value);
+                    }}
+                    className="py-1 px-2 text-sm w-full border border-neutral-300 focus:outline-none focus:border-green-500 rounded"
+                  >
+                    <option value="g">Gram (g)</option>
+                    <option value="kg">Kilogram (kg)</option>
+                    <option value="t">Metric Ton (t)</option>
+                  </select>
+
+                  <ErrorInfo field={field} />
+                </>
+              )}
+            />
           </div>
         </div>
 
@@ -138,7 +162,7 @@ export default function UnitConverter() {
             <p className="text-sm text-green-500">Result:</p>
 
             <p className="text-sm">
-              {result} {selectToRef.current?.value}
+              {result} {form.getFieldValue("toUnit")}
             </p>
           </div>
         )}

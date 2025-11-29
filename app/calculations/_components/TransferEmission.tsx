@@ -57,8 +57,6 @@ export default function TransferEmission() {
       }
 
       setResult(Number(emission.toFixed(6)));
-
-      //   TODO: Next Calc, upload file and get its emission based on its size in bytes "The perByte() function can be used with both the OneByte and Sustainable Web Design Models. We recommend using this function, as it will return a CO2 value (in grams) for raw data transfer using a given model. It can be used for calculating emissions from websites, file uploads, streaming etc.
     },
   });
 
@@ -107,6 +105,7 @@ export default function TransferEmission() {
                     name="select-model"
                     value={field.state.value}
                     onChange={(e) => {
+                      setResult(null);
                       field.handleChange(e.target.value);
                     }}
                     className="py-1 px-2 text-sm w-full border border-neutral-300 focus:outline-none focus:border-green-500 rounded"
@@ -132,6 +131,7 @@ export default function TransferEmission() {
                     name="select-method"
                     value={field.state.value}
                     onChange={(e) => {
+                      setResult(null);
                       field.handleChange(e.target.value);
                     }}
                     className="py-1 px-2 text-sm w-full border border-neutral-300 focus:outline-none focus:border-green-500 rounded"
@@ -139,7 +139,6 @@ export default function TransferEmission() {
                     <option value="perByte">perByte</option>
 
                     {/* perVisit is for SWD only! ⚠️ */}
-
                     <form.Subscribe
                       selector={(state) => state.values.model}
                       children={(model) =>
@@ -167,6 +166,7 @@ export default function TransferEmission() {
                     name="select-isGreenHost"
                     value={field.state.value}
                     onChange={(e) => {
+                      setResult(null);
                       field.handleChange(e.target.value);
                     }}
                     className="py-1 px-2 text-sm w-full border border-neutral-300 focus:outline-none focus:border-green-500 rounded"

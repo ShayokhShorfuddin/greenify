@@ -28,7 +28,16 @@
         "noUnknownAtRules": "off"
       },
       "correctness": {
-        "noUnusedImports": "error"
+        "noUnusedImports": {
+          "level": "error",
+          "fix": "safe"
+        }
+      },
+      "complexity": {
+        "noUselessFragments": {
+          "level": "error",
+          "fix": "safe"
+        }
       }
     },
     "domains": {

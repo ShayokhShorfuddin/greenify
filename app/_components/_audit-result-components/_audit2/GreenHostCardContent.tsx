@@ -4,8 +4,8 @@ import { copyableText } from "@/app/_utils/copyable-text";
 import logger from "@/logger";
 import cross from "@/public/svgs/cross.svg";
 import green_tick from "@/public/svgs/green-tick.svg";
+import { CopyToClipboardButton } from "@/shared/CopyToClipboardButton";
 import { ErrorOccurredText, FailedToReachAPIText } from "@/shared/texts";
-import { CopyToClipboardButton } from "../CopyToClipboardButton";
 
 export type Type_GreenHostAPIResponse =
   | { green: false; kind: "GreenHostAPIResponse" }
@@ -54,7 +54,10 @@ export async function GreenHostCardContent({ url }: { url: string }) {
 
   return (
     <>
-      <CopyToClipboardButton text={copyableText({ url, result })} />
+      <CopyToClipboardButton
+        text={copyableText({ url, result })}
+        className="absolute top-2 right-2"
+      />
 
       <div className="flex items-center gap-2 mt-1">
         {result.green ? (
