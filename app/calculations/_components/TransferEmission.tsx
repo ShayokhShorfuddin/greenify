@@ -185,7 +185,7 @@ export default function TransferEmission() {
         {result !== null && (
           <div className="flex items-center justify-between mt-2.5">
             <p className="text-sm text-green-500">Result:</p>
-            <p className="text-sm">{result} gCO2e</p>
+            <p className="text-sm">{result} gCO2eq</p>
           </div>
         )}
 

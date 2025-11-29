@@ -93,17 +93,19 @@ export default function FileSizeMeasurer() {
 
             <div className="flex items-center justify-between gap-x-4">
               <p>SWD Per Byte: </p>
-              <p className="font-mono">{result.SWDPerByteEmission} gCO2e</p>
+              <p className="font-mono">{result.SWDPerByteEmission} gCO2eq</p>
             </div>
 
             <div className="flex items-center justify-between gap-x-4">
               <p>SWD Per Visit: </p>
-              <p className="font-mono">{result.SWDPerVisitEmission} gCO2e</p>
+              <p className="font-mono">{result.SWDPerVisitEmission} gCO2eq</p>
             </div>
 
             <div className="flex items-center justify-between gap-x-4">
               <p>1byte Per Byte: </p>
-              <p className="font-mono">{result.OneBytePerByteEmission} gCO2e</p>
+              <p className="font-mono">
+                {result.OneBytePerByteEmission} gCO2eq
+              </p>
             </div>
           </div>
 

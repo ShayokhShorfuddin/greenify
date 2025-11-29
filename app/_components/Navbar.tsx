@@ -49,6 +49,9 @@ export default function Navbar() {
             <li>
               <Link href="/sponsor">Sponsor</Link>
             </li>
+            <li>
+              <Link href="/calculations">Calculations</Link>
+            </li>
           </ul>
 
           {isMenuOpen ? (
@@ -108,6 +111,11 @@ function NavigationDropdown() {
         <li>
           <Link href="/">
             <p className="text-sm text-nowrap">Sponsor</p>
+          </Link>
+        </li>
+        <li>
+          <Link href="/calculations">
+            <p className="text-sm text-nowrap">Calculations</p>
           </Link>
         </li>
       </ul>

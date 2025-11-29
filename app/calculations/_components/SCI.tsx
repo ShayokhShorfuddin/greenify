@@ -88,7 +88,7 @@ export default function SCI() {
           name="carbonIntensity"
           children={(field) => (
             <>
-              <p className="mt-2.5 text-xs">Carbon intensity (gCO2e/kWh)</p>
+              <p className="mt-2.5 text-xs">Carbon intensity (gCO2eq/kWh)</p>
               <input
                 type="number"
                 step="any"
@@ -201,7 +201,7 @@ const parameters = [
     parameter: "I",
     fullForm: "Carbon intensity",
     description:
-      "Carbon emitted per kWh of energy, measured in gCO2e/kWh. This is the location-based carbon intensity of the energy grid powering your software. Market-based measures are 'not allowed' in the SCI; only the location-based metrics can be used.",
+      "Carbon emitted per kWh of energy, measured in gCO2eq/kWh. This is the location-based carbon intensity of the energy grid powering your software. Market-based measures are 'not allowed' in the SCI; only the location-based metrics can be used.",
   },
 
   {
