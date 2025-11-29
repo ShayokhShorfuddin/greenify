@@ -8,7 +8,6 @@ export async function Dashboard({ projectID }: { projectID: string }) {
   return (
     <main className="font-sans">
       <Heading projectID={projectID} />
-
       <ComponentGrid projectID={projectID} />
       <Toaster />
     </main>

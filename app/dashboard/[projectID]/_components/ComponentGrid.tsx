@@ -28,6 +28,10 @@ export async function ComponentGrid({ projectID }: { projectID: string }) {
         <CarbonTxtCard url={project.url} />
         <GreenHostCard url={project.url} />
         <IPToCo2IntensityCard url={project.url} />
+        {/* TODO: 4th place is reserved for "Score card", which is basically the mark we give to the user based on all of the audits and stuffs, kinda like a final score*/}
+        <div className="border border-audit-card-border p-2 bg-audit-card-background rounded">
+          <p>Reserved</p>
+        </div>
       </section>
     </>
   );

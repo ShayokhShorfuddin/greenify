@@ -110,7 +110,7 @@ export default function FileSizeMeasurer() {
           </div>
 
           <p className="text-xs mt-3">
-            Uploaded files are not sent to our server; all processing is done
+            Uploaded files are not sent to our server. All processing is done
             within your browser :)
           </p>
         </div>

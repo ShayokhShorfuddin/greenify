@@ -22,5 +22,3 @@ export default async function Page() {
 
   return <Dashboard />;
 }
-
-// TODO: Think what to do for 4th Audit
