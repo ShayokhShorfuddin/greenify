@@ -1,7 +1,5 @@
-import { copyableText } from "@/app/_utils/copyable-text";
 import { getIP } from "@/app/_utils/get-ip";
 import logger from "@/logger";
-import { CopyToClipboardButton } from "@/shared/CopyToClipboardButton";
 import {
   ErrorOccurredText,
   FailedToReachAPIText,
@@ -60,70 +58,61 @@ export async function IPToCo2IntensityCardContent({ url }: { url: string }) {
   }
 
   return (
-    <>
-      <CopyToClipboardButton
-        text={copyableText({ url, result })}
-        className="absolute top-2 right-2"
-      />
+    <div className="mt-1 text-sm text-neutral-500">
+      <div className="flex gap-x-1 items-center">
+        <p>{result.country_name === "World" ? "Region:" : "Country:"}</p>
 
-      <div className="mt-1 text-sm text-neutral-500">
-        <div className="flex gap-x-1 items-center">
-          <p>{result.country_name === "World" ? "Region:" : "Country:"}</p>
+        {result.country_name === "World" ? (
+          <p>World 🌎</p>
+        ) : (
+          <div className="flex gap-x-1 items-center">
+            <p className="text-neutral-700">{result.country_name}</p>
 
-          {result.country_name === "World" ? (
-            <p>World 🌎</p>
-          ) : (
-            <div className="flex gap-x-1 items-center">
-              <p className="text-neutral-700">{result.country_name}</p>
-
-              {/** biome-ignore lint/performance/noImgElement: <> */}
-              <img
-                src={`https://flagsapi.com/${result.country_code_iso_2}/shiny/24.png`}
-                alt={`Flag of ${result.country_name}`}
-              />
-            </div>
-          )}
-        </div>
-
-        <p className="mt-1">Intensity: {result.carbon_intensity} gCO2eq/kWh.</p>
-        <p className="mt-1">
-          Intensity type:{" "}
-          {result.carbon_intensity_type.charAt(0).toUpperCase() +
-            result.carbon_intensity_type.slice(1)}
-        </p>
-        <p className="mt-1">Data year: {result.year}</p>
-
-        <hr className="w-full border-neutral-200 mt-2" />
-
-        <p className="mt-2 font-medium text-neutral-700">
-          Electricity spectrum.
-        </p>
-
-        <div className="w-full h-2 bg-neutral-200 rounded mt-2">
-          <div
-            className="h-2 bg-green-500 rounded"
-            style={{ width: `${100 - result.generation_from_fossil}%` }}
-          />
-        </div>
-
-        <div className="flex items-center justify-between mt-2">
-          <div className="flex items-center gap-x-2">
-            <div className="size-2 bg-green-500 rounded-full" />
-            <p>Renewable</p>
+            {/** biome-ignore lint/performance/noImgElement: <> */}
+            <img
+              src={`https://flagsapi.com/${result.country_code_iso_2}/shiny/24.png`}
+              alt={`Flag of ${result.country_name}`}
+            />
           </div>
-
-          <p>{(100 - result.generation_from_fossil).toFixed(2)}%</p>
-        </div>
-
-        <div className="flex items-center justify-between mt-1">
-          <div className="flex items-center gap-x-2">
-            <div className="size-2 bg-neutral-400 rounded-full" />
-            <p>Fossil</p>
-          </div>
-
-          <p>{result.generation_from_fossil.toFixed(2)}%</p>
-        </div>
+        )}
       </div>
-    </>
+
+      <p className="mt-1">Intensity: {result.carbon_intensity} gCO2eq/kWh.</p>
+      <p className="mt-1">
+        Intensity type:{" "}
+        {result.carbon_intensity_type.charAt(0).toUpperCase() +
+          result.carbon_intensity_type.slice(1)}
+      </p>
+      <p className="mt-1">Data year: {result.year}</p>
+
+      <hr className="w-full border-neutral-200 mt-2" />
+
+      <p className="mt-2 font-medium text-neutral-700">Electricity spectrum.</p>
+
+      <div className="w-full h-2 bg-neutral-200 rounded mt-2">
+        <div
+          className="h-2 bg-green-500 rounded"
+          style={{ width: `${100 - result.generation_from_fossil}%` }}
+        />
+      </div>
+
+      <div className="flex items-center justify-between mt-2">
+        <div className="flex items-center gap-x-2">
+          <div className="size-2 bg-green-500 rounded-full" />
+          <p>Renewable</p>
+        </div>
+
+        <p>{(100 - result.generation_from_fossil).toFixed(2)}%</p>
+      </div>
+
+      <div className="flex items-center justify-between mt-1">
+        <div className="flex items-center gap-x-2">
+          <div className="size-2 bg-neutral-400 rounded-full" />
+          <p>Fossil</p>
+        </div>
+
+        <p>{result.generation_from_fossil.toFixed(2)}%</p>
+      </div>
+    </div>
   );
 }

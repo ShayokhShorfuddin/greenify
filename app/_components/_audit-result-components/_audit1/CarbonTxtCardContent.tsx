@@ -1,13 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { copyableText } from "@/app/_utils/copyable-text";
 import {
   examineCarbonTxtFile,
   type Type_ExamineCarbonTxtFile,
 } from "@/app/actions/audits/carbontxt-file-examination";
 import cross from "@/public/svgs/cross.svg";
 import green_tick from "@/public/svgs/green-tick.svg";
-import { CopyToClipboardButton } from "@/shared/CopyToClipboardButton";
 import { CarbonTxtIsNotReachableText, ErrorOccurredText } from "@/shared/texts";
 
 export async function CarbonTxtCardContent({ url }: { url: string }) {
@@ -29,11 +27,6 @@ export async function CarbonTxtCardContent({ url }: { url: string }) {
 
   return (
     <>
-      <CopyToClipboardButton
-        text={copyableText({ url, result: results })}
-        className="absolute top-2 right-2"
-      />
-
       {/* Existence */}
       <div className="flex items-center gap-2 mt-1">
         <p className="text-sm text-neutral-500">

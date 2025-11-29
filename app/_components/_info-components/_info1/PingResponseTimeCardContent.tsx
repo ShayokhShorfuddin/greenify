@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { copyableText } from "@/app/_utils/copyable-text";
 import {
   measurePingResponse,
   type Type_MeasurePingResponse,
 } from "@/app/_utils/measure-ping-response";
-import { CopyToClipboardButton } from "@/shared/CopyToClipboardButton";
 import { ErrorOccurredText } from "@/shared/texts";
 
 export async function PingResponseTimeCardContent({ url }: { url: string }) {
@@ -18,10 +16,6 @@ export async function PingResponseTimeCardContent({ url }: { url: string }) {
 
   return (
     <>
-      <CopyToClipboardButton
-        text={copyableText({ url, result: results })}
-        className="absolute top-2 right-2"
-      />
       <div className="flex items-end font-mono mt-4 justify-center gap-x-2">
         <p className="text-3xl">{results.responseTimeMs}</p>
         <p className="text-sm">ms</p>
