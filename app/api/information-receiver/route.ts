@@ -2,7 +2,6 @@ import { ObjectId } from "bson";
 import client from "@/lib/db";
 
 // TODO: ⚠️ Migrate to Supabase and Drizzle
-// TODO: Port better-auth to work with Supabase and Drizzle
 
 type Resource = {
   url: string; // The URL of the file

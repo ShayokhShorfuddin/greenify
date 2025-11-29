@@ -1,6 +1,7 @@
 import { validateCarbonTxt } from "@/app/_utils/carbontxt-validation";
 
 // TODO: Fix complete test structure
+// TODO: Also, I can't seem to think of anything else to test using Jest, other than API routes. Utils are just fine as long as we don't change them massively. What exactly should we test?
 
 describe("validateCarbonTxt", () => {
   test("should fail for no content", async () => {
