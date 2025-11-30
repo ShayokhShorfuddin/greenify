@@ -5,7 +5,7 @@ import { CopyToClipboardButton } from "@/shared/CopyToClipboardButton";
 
 export function CarbonTxtCard() {
   return (
-    <div className="relative bg-audit-card-background border border-audit-card-border rounded-lg p-3 max-w-120">
+    <div className="relative bg-greenify-card-background border border-greenify-card-border rounded-lg p-3 max-w-120">
       {/* Audit number */}
       <small className="text-neutral-700 font-mono">Audit #1</small>
       <p className="text-[15px]">Carbon.txt file examination.</p>

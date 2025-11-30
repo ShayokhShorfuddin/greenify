@@ -1,26 +1,17 @@
 import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
-
-// Schemas
-// Import and add more schemas as we create them
-import { analytics } from "@/schemas/analytics-schema";
-import { project } from "@/schemas/project-schema";
+import * as schema from "@/schemas/schema";
 
 declare global {
-  var database: PostgresJsDatabase<{ project: typeof project }> | undefined;
+  var database: PostgresJsDatabase<typeof schema> | undefined;
 }
 
-const instance = drizzle(process.env.DATABASE_URL as string, {
-  schema: {
-    project,
-    analytics,
-  },
-});
+const instance = drizzle(process.env.DATABASE_URL as string, { schema });
 
 if (process.env.NODE_ENV !== "production") {
   global.database = instance;
 }
 
-export function getDB(): PostgresJsDatabase<{ project: typeof project }> {
+export function getDB(): PostgresJsDatabase<typeof schema> {
   return global.database || instance;
 }
 

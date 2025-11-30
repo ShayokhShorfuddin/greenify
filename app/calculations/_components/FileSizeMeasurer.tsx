@@ -48,13 +48,13 @@ export default function FileSizeMeasurer() {
   }
 
   return (
-    <div className="p-3 rounded bg-audit-card-background border border-audit-card-border">
+    <div className="p-3 rounded bg-greenify-card-background border border-greenify-card-border">
       <p>File Size Measurer</p>
 
       <input
         type="file"
         onChange={(e) => handleChange(e)}
-        className="w-full border border-audit-card-border rounded mt-2 p-1 hover:cursor-pointer"
+        className="w-full border border-greenify-card-border rounded mt-2 p-1 hover:cursor-pointer"
       />
 
       {result && (

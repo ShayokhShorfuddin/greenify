@@ -61,7 +61,7 @@ export default function TransferEmission() {
   });
 
   return (
-    <div className="p-3 rounded bg-audit-card-background border border-audit-card-border">
+    <div className="p-3 rounded bg-greenify-card-background border border-greenify-card-border">
       <p>Byte Transfer Emission</p>
 
       <form

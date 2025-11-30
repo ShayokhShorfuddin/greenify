@@ -4,7 +4,7 @@ import { CopyToClipboardButton } from "@/shared/CopyToClipboardButton";
 
 export function IPToCarbonIntensityCard() {
   return (
-    <div className="relative bg-audit-card-background border border-audit-card-border rounded-lg p-3">
+    <div className="relative bg-greenify-card-background border border-greenify-card-border rounded-lg p-3">
       {/* Audit number */}
       <small className="text-neutral-700 font-mono">Audit #3</small>
       <p className="text-[15px]">

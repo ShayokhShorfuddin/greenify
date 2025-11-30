@@ -8,7 +8,7 @@ type Type_Assets = {
 };
 
 type Type_Payload = {
-  projectId: string;
+  projectID: string;
   totalTransferSize: number;
   assets: Type_Assets[];
 };
@@ -40,7 +40,7 @@ window.addEventListener("load", () => {
     const payload: Type_Payload = {
       // TODO: This is supposed to be set automatically when we hand over the script to users. Hardcoded for now for testing.
       // TODO: What if this id gets leaked and people spam our backend with fake data? Look at the bottom of this file.
-      projectId: "1764481163499d238f570-38bd-4b64-91ae-4b2c4d2bea84",
+      projectID: "1764481163499d238f570-38bd-4b64-91ae-4b2c4d2bea84",
 
       totalTransferSize: collectedAssets.reduce(
         (acc, curr) => acc + curr.transferSize,

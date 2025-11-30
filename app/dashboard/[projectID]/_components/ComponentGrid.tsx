@@ -2,7 +2,7 @@ import { CarbonTxtCard } from "@/app/_components/_audit-components/_audit1/Carbo
 import { GreenHostCard } from "@/app/_components/_audit-components/_audit2/GreenHostCard";
 import { IPToCo2IntensityCard } from "@/app/_components/_audit-components/_audit3/IPToCo2IntensityCard";
 import { PingResponseTimeCard } from "@/app/_components/_info-components/_info1/PingResponseTimeCard";
-import { Statistic } from "@/app/_components/_info-components/_info2/statistic";
+import { BytesStatistics } from "@/app/_components/_info-components/_info2/BytesStatistics";
 import { getProjectByID } from "@/app/actions/data/projects";
 
 // Container of all dashboard components
@@ -17,7 +17,7 @@ export async function ComponentGrid({ projectID }: { projectID: string }) {
   if (response.notFound) {
     // TODO: Style it later
     // Go to this to design it localhost:3001/dashboard/6921144fa4a24de722819463
-    http: return <p>Project not found.</p>;
+    return <p>Project not found.</p>;
   }
 
   const { project } = response;
@@ -32,7 +32,7 @@ export async function ComponentGrid({ projectID }: { projectID: string }) {
         <GreenHostCard url={project.url} />
         <IPToCo2IntensityCard url={project.url} />
         {/* TODO: 4th place is reserved for "Score card", which is basically the mark we give to the user based on all of the audits and stuffs, kinda like a final score*/}
-        <div className="border border-audit-card-border p-2 bg-audit-card-background rounded">
+        <div className="border border-greenify-card-border p-2 bg-greenify-card-background rounded">
           <p>Reserved</p>
         </div>
 
@@ -40,11 +40,11 @@ export async function ComponentGrid({ projectID }: { projectID: string }) {
 
         {/* TODO: To make this one, we will need the bytes data sent from the informer to our database */}
         {/* TODO: 6th place is reserved for "https://api.websitecarbon.com"*/}
-        <div className="border border-audit-card-border p-2 bg-audit-card-background rounded">
+        <div className="border border-greenify-card-border p-2 bg-greenify-card-background rounded">
           <p>Reserved</p>
         </div>
 
-        <Statistic url={project.url} />
+        <BytesStatistics projectId={projectID} />
       </section>
     </>
   );

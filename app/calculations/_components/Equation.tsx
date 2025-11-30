@@ -22,11 +22,11 @@ export default function Equation({
   return (
     <>
       {typeof equation === "string" ? (
-        <p className="py-1 px-2.5 border rounded border-audit-card-border mt-2 text-xs font-mono">
+        <p className="py-1 px-2.5 border rounded border-greenify-card-border mt-2 text-xs font-mono">
           {equation}
         </p>
       ) : (
-        <div className="flex flex-col gap-y-2 py-1 px-2.5 border rounded border-audit-card-border mt-2 text-xs font-mono">
+        <div className="flex flex-col gap-y-2 py-1 px-2.5 border rounded border-greenify-card-border mt-2 text-xs font-mono">
           {equation.map((line, index) => (
             <p key={index}>{line}</p>
           ))}
