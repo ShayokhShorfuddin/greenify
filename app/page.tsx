@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { CarbonTxtSupport } from "./_components/CarbonTxtSupport";
 import { CTA } from "./_components/CTA";
 import FAQ from "./_components/FAQ";
-import Footer from "./_components/Footer";
 import Hero from "./_components/Hero";
 import { Insights } from "./_components/Insights";
 import Navbar from "./_components/Navbar";
@@ -40,7 +39,6 @@ export default async function Page() {
       <Scoring />
       <FAQ />
       <CTA />
-      <Footer />
     </main>
   );
 }

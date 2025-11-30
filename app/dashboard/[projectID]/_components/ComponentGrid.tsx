@@ -1,7 +1,8 @@
-import CarbonTxtCard from "@/app/_components/_audit-result-components/_audit1/CarbonTxtCard";
-import GreenHostCard from "@/app/_components/_audit-result-components/_audit2/GreenHostCard";
-import IPToCo2IntensityCard from "@/app/_components/_audit-result-components/_audit3/IPToCo2IntensityCard";
-import PingResponseTimeCard from "@/app/_components/_info-components/_info1/PingResponseTimeCard";
+import { CarbonTxtCard } from "@/app/_components/_audit-components/_audit1/CarbonTxtCard";
+import { GreenHostCard } from "@/app/_components/_audit-components/_audit2/GreenHostCard";
+import { IPToCo2IntensityCard } from "@/app/_components/_audit-components/_audit3/IPToCo2IntensityCard";
+import { PingResponseTimeCard } from "@/app/_components/_info-components/_info1/PingResponseTimeCard";
+import { Statistic } from "@/app/_components/_info-components/_info2/statistic";
 import { getProjectByID } from "@/app/actions/data/projects";
 
 // Container of all dashboard components
@@ -15,7 +16,8 @@ export async function ComponentGrid({ projectID }: { projectID: string }) {
 
   if (response.notFound) {
     // TODO: Style it later
-    return <p>Project not found.</p>;
+    // Go to this to design it localhost:3001/dashboard/6921144fa4a24de722819463
+    http: return <p>Project not found.</p>;
   }
 
   const { project } = response;
@@ -41,6 +43,8 @@ export async function ComponentGrid({ projectID }: { projectID: string }) {
         <div className="border border-audit-card-border p-2 bg-audit-card-background rounded">
           <p>Reserved</p>
         </div>
+
+        <Statistic url={project.url} />
       </section>
     </>
   );

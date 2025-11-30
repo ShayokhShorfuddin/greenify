@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Footer from "../_components/Footer";
 import Navbar from "../_components/Navbar";
 import Amortization from "./_components/Amortization";
 import FileSizeMeasurer from "./_components/FileSizeMeasurer";
@@ -33,8 +32,6 @@ export default function Page() {
         <TransferEmission />
         <FileSizeMeasurer />
       </section>
-
-      <Footer />
     </main>
   );
 }

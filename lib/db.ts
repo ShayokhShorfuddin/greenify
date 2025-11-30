@@ -23,3 +23,6 @@ if (process.env.NODE_ENV !== "production") {
 export function getDB(): PostgresJsDatabase<{ project: typeof project }> {
   return global.database || instance;
 }
+
+//TODO Still getting CONNECT_TIMEOUT issue.
+// Try looking into "Connect" in our dashboard and "ORMs". Also feel free to see other options next to ORMs

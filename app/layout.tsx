@@ -1,3 +1,4 @@
+import Footer from "./_components/Footer";
 import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
 
@@ -31,6 +32,8 @@ export default function RootLayout({
       >
         {/* min-h-svh in order to push footer to bottom on tall screens */}
         <div className="min-h-svh">{children}</div>
+
+        <Footer />
       </body>
     </html>
   );

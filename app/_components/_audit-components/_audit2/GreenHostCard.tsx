@@ -2,9 +2,9 @@ import { Suspense } from "react";
 import { GreenHostCardContent } from "./GreenHostCardContent";
 import { GreenHostCardSkeleton } from "./GreenHostCardSkeleton";
 
-export default async function GreenHostCard({ url }: { url: string }) {
+export async function GreenHostCard({ url }: { url: string }) {
   return (
-    <div className="relative bg-audit-card-background border border-audit-card-border rounded-lg p-3">
+    <div className="bg-audit-card-background border border-audit-card-border rounded-lg p-3">
       <small className="text-neutral-700 font-mono">Audit #2</small>
       <p className="text-[15px]">Green host detection.</p>
 
