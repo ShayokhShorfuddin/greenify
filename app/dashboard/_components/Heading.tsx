@@ -12,15 +12,12 @@ export async function Heading({ projectID }: { projectID?: string }) {
     headers: await headers(),
   });
 
-  // Get user id and firstname
-  const userID = session?.user.id as string;
+  // Get user firstname
   const userName = session?.user.name || "Guest";
   const firstName = userName.split(" ")[0];
 
   // Create a promise to get user's projects
-  const getAllProjectNamesAndIDsPromise = getAllProjectNamesAndIDs({
-    userID,
-  });
+  const getAllProjectNamesAndIDsPromise = getAllProjectNamesAndIDs();
 
   return (
     <header className="p-2 font-sans">

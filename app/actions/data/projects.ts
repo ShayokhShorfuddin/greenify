@@ -1,30 +1,23 @@
 "use server";
 
 import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
 import { generateUniqueId } from "@/app/_utils/generate-unique-id";
+import { auth } from "@/lib/auth";
 import { getDB } from "@/lib/db";
 import logger from "@/logger";
 import { project } from "@/schemas/project-schema";
-
 import type {
   Type_AddProjectResponse,
   Type_GetAllProjectNamesResponse,
   Type_GetProjectByIDResponse,
 } from "./types";
 
-// TODO: Major fix required here
-// File: projects.ts
-// Issue: The functions addProject, getAllProjectNamesAndIDs, and getProjectByID accept userID as a client-provided argument.
-// Risk: This is a severe Insecure Direct Object Reference (IDOR) vulnerability. A malicious user can call these actions with any userID to create projects on behalf of others or view their private project names.
-// Fix: Do not accept userID as an argument. Instead, retrieve the authenticated user's session inside the Server Action using auth.api.getSession (or your auth.ts equivalent) and use the ID from the session.
-
 // Add a new project
 export async function addProject({
-  userID,
   projectName,
   projectURL,
 }: {
-  userID: string;
   projectName: string;
   projectURL: string;
 }): Promise<Type_AddProjectResponse> {
@@ -40,7 +33,13 @@ export async function addProject({
     }
 
     // Since project with same URL doesn't exist, create a new one
+
     // Get the ID of the user from session
+    const userID = await auth.api
+      .getSession({
+        headers: await headers(),
+      })
+      .then((session) => session?.user.id as string);
 
     // Generate unique id for the project
     const projectID = generateUniqueId();
@@ -67,13 +66,15 @@ export async function addProject({
 }
 
 // Get all project's names (useful for listing projects in the select project component)
-export async function getAllProjectNamesAndIDs({
-  userID,
-}: {
-  userID: string;
-}): Promise<Type_GetAllProjectNamesResponse> {
+export async function getAllProjectNamesAndIDs(): Promise<Type_GetAllProjectNamesResponse> {
   try {
     const db = getDB();
+
+    const userID = await auth.api
+      .getSession({
+        headers: await headers(),
+      })
+      .then((session) => session?.user.id as string);
 
     const projectsCreatedByUser = await db.query.project.findMany({
       where: eq(project.createdBy, userID),

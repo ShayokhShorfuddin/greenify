@@ -8,7 +8,6 @@ import { useState } from "react";
 import Modal from "react-modal";
 import isValidUrl from "@/app/_utils/is-valid-url";
 import { addProject } from "@/app/actions/data/projects";
-import { authClient } from "@/lib/auth-client";
 import plus from "@/public/svgs/plus.svg";
 
 // Necessary for screen readers and accessibility
@@ -91,10 +90,7 @@ function ModalContent({
       // Clear any previous insertion failure message
       setError(null);
 
-      // Get the ID of the user
-      const userID = (await authClient.getSession()).data?.user.id as string;
-
-      const response = await addProject({ userID, projectName, projectURL });
+      const response = await addProject({ projectName, projectURL });
 
       // If insertion failed
       if (response.errorOccurred) {
