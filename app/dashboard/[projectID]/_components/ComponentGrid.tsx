@@ -35,7 +35,15 @@ export async function ComponentGrid({ projectID }: { projectID: string }) {
         </div>
 
         <PingResponseTimeCard url={project.url} />
+
+        {/* TODO: To make this one, we will need the bytes data sent from the informer to our database */}
+        {/* TODO: 6th place is reserved for "https://api.websitecarbon.com"*/}
+        <div className="border border-audit-card-border p-2 bg-audit-card-background rounded">
+          <p>Reserved</p>
+        </div>
       </section>
     </>
   );
 }
+
+// TODO: Fix the errors on errors.txt

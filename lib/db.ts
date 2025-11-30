@@ -2,6 +2,7 @@ import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
 
 // Schemas
 // Import and add more schemas as we create them
+import { analytics } from "@/schemas/analytics-schema";
 import { project } from "@/schemas/project-schema";
 
 declare global {
@@ -11,6 +12,7 @@ declare global {
 const instance = drizzle(process.env.DATABASE_URL as string, {
   schema: {
     project,
+    analytics,
   },
 });
 

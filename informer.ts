@@ -1,19 +1,19 @@
 // Informer: The script that collects page data and sends it back to Greenify backend for analytics
 
-type Resource = {
+type Type_Assets = {
   url: string; // The URL of the file
   type: string; // The type of the file
   duration: number; // How long it took to download (ms)
   transferSize: number; // Bytes transferred over network
 };
 
-type Payload = {
+type Type_Payload = {
   projectId: string;
   totalTransferSize: number;
-  resources: Resource[];
+  assets: Type_Assets[];
 };
 
-const collectedResources: PerformanceResourceTiming[] = [];
+const collectedAssets: PerformanceResourceTiming[] = [];
 
 // Setup the Observer
 const observer = new PerformanceObserver((list) => {
@@ -22,7 +22,7 @@ const observer = new PerformanceObserver((list) => {
   const entries = list.getEntries() as PerformanceResourceTiming[];
 
   entries.forEach((entry) => {
-    collectedResources.push(entry);
+    collectedAssets.push(entry);
   });
 });
 
@@ -37,18 +37,18 @@ window.addEventListener("load", () => {
     // Stop observing to save memory/CPU once we are ready to send
     observer.disconnect();
 
-    const payload: Payload = {
+    const payload: Type_Payload = {
       // TODO: This is supposed to be set automatically when we hand over the script to users. Hardcoded for now for testing.
       // TODO: What if this id gets leaked and people spam our backend with fake data? Look at the bottom of this file.
-      projectId: "69243a4c425a03c34c76a53e",
+      projectId: "1764481163499d238f570-38bd-4b64-91ae-4b2c4d2bea84",
 
-      totalTransferSize: collectedResources.reduce(
+      totalTransferSize: collectedAssets.reduce(
         (acc, curr) => acc + curr.transferSize,
         0,
       ),
 
       // Why not `entry.initiatorType` for asset type? Because it's often inaccurate. Check https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming/initiatorType
-      resources: collectedResources.map((entry) => ({
+      assets: collectedAssets.map((entry) => ({
         url: entry.name,
         type: determineAssetType(entry.name),
         duration: parseFloat(entry.duration.toFixed(2)),
@@ -120,11 +120,11 @@ function determineAssetType(url: string): string {
 
 // The most straightforward approach is to embed a unique project ID directly into the script when users download/copy it. Here are a few implementation options:
 
-// const payload: Payload = {
+// const payload: Type_Payload = {
 //   projectId: "PROJECT_ID_PLACEHOLDER", // Replace when serving
 //   url: window.location.href,
-//   totalTransferSize: collectedResources.reduce(/*...*/),
-//   resources: collectedResources.map(/*...*/),
+//   totalTransferSize: collectedAssets.reduce(/*...*/),
+//   assets: collectedAssets.map(/*...*/),
 // };
 
 // Then when a user requests the script, you'd replace PROJECT_ID_PLACEHOLDER with their actual project ID.

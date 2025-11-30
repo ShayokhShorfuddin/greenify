@@ -1,54 +1,34 @@
-import { ObjectId } from "bson";
-import client from "@/lib/db";
+import { generateUniqueId } from "@/app/_utils/generate-unique-id";
+import { getDB } from "@/lib/db";
+import { analytics } from "@/schemas/analytics-schema";
 
-// TODO: ⚠️ Migrate to Supabase and Drizzle
-
-type Resource = {
+type Type_Assets = {
   url: string; // The URL of the file
   type: string; // The type of the file
   duration: number; // How long it took to download (ms)
   transferSize: number; // Bytes transferred over network
 };
 
-type Payload = {
+type Type_Payload = {
   projectId: string;
   totalTransferSize: number;
-  resources: Resource[];
+  assets: Type_Assets[];
 };
-
-type HistoryEntry = {
-  totalTransferSize: number;
-  resources: Resource[];
-  timestamp: Date;
-};
-
-interface Project extends Document {
-  _id: ObjectId;
-  history: HistoryEntry[];
-}
 
 export async function POST(request: Request) {
   // Handle incoming informer data
-  const data = (await request.json()) as Payload;
+  const data = (await request.json()) as Type_Payload;
 
   // Connect to MongoDB and store the data
-  const projectsCollection = client
-    .db("Greenify")
-    .collection<Project>("projects");
+  const db = getDB();
 
-  await projectsCollection.updateOne(
-    { _id: new ObjectId(data.projectId) },
-    {
-      $push: {
-        history: {
-          totalTransferSize: data.totalTransferSize,
-          resources: data.resources,
-          timestamp: new Date(),
-        },
-      },
-    },
-    { upsert: true },
-  );
+  await db.insert(analytics).values({
+    id: generateUniqueId(),
+    projectID: data.projectId,
+    totalTransferSize: data.totalTransferSize,
+    assets: data.assets,
+    createdAt: new Date(),
+  });
 
   const origin = request.headers.get("origin") || "*";
 
