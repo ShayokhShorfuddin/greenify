@@ -7,8 +7,9 @@ type Type_Assets = {
   transferSize: number; // Bytes transferred over network
 };
 
-type Type_Payload = {
+export type Type_Payload = {
   projectID: string;
+  htmlSize: number;
   totalTransferSize: number;
   assets: Type_Assets[];
 };
@@ -42,6 +43,8 @@ window.addEventListener("load", () => {
       // TODO: What if this id gets leaked and people spam our backend with fake data? Look at the bottom of this file.
       projectID: "1764481163499d238f570-38bd-4b64-91ae-4b2c4d2bea84",
 
+      htmlSize: getHTMLSize(),
+
       totalTransferSize: collectedAssets.reduce(
         (acc, curr) => acc + curr.transferSize,
         0,
@@ -56,13 +59,14 @@ window.addEventListener("load", () => {
       })),
     };
 
-    // Send to backend (using Beacon)
+    // Send to backend using beacon
     const blob = new Blob([JSON.stringify(payload)], {
       type: "application/json",
     });
-    // TODO: Change the URL to production url before deployment and compile this script
+
+    // TODO: Change the URL after we buy domain and do production deployment and compile this script
     navigator.sendBeacon(
-      "http://localhost:3001/api/information-receiver",
+      "https://greenify-app.netlify.app/api/information-receiver",
       blob,
     );
   }, 4000);
@@ -114,6 +118,11 @@ function determineAssetType(url: string): string {
 
   // Miscellaneous
   return "misc";
+}
+
+function getHTMLSize(): number {
+  const htmlContent = document.documentElement.outerHTML;
+  return new TextEncoder().encode(htmlContent).length;
 }
 
 // TODO (Will think about it later): If our API url gets compromised, people can spam our backend using Postman with fake data. Should we have some sort of token system? Yes!

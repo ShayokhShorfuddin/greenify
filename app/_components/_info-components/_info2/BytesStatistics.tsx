@@ -44,9 +44,16 @@ export async function BytesStatistics({ projectId }: { projectId: string }) {
       <small className="text-neutral-700 font-mono">Info #2</small>
       <p className="text-[15px]">Bytes transferred timeline.</p>
 
-      <Suspense fallback={<BytesStatisticsSkeleton />}>
-        <BytesStatisticsContent analyticsData={analyticsData} />
-      </Suspense>
+      {/* Don't render chart if data is empty */}
+      {analyticsData.length === 0 ? (
+        <p className="text-red-500 mt-2 text-sm">
+          No bytes transfer data available for this project.
+        </p>
+      ) : (
+        <Suspense fallback={<BytesStatisticsSkeleton />}>
+          <BytesStatisticsContent analyticsData={analyticsData} />
+        </Suspense>
+      )}
     </div>
   );
 }

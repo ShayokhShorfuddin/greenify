@@ -61,6 +61,7 @@ export async function ComponentGrid({ projectID }: { projectID: string }) {
 
         {/* TODO: To make this one, we will need the bytes data sent from the informer to our database */}
         {/* TODO: 6th place is reserved for "https://api.websitecarbon.com"*/}
+        {/* TODO Check those screenshots in gallery to compare the bytes computed by other services vs ours */}
         <div className="border border-greenify-card-border p-2 bg-greenify-card-background rounded">
           <p>Reserved</p>
         </div>

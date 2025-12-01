@@ -10,7 +10,7 @@ const connectionString = process.env.DATABASE_URL as string;
 export const client = postgres(connectionString, { prepare: false });
 export const db = drizzle(client, { schema });
 
-// TODO Took it from Supabase dashboard. See if this one works or not
+// TODO (Nope still same issue) Took it from Supabase dashboard. See if this one works or not
 
 // import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
 // import postgres from "postgres";

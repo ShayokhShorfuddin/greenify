@@ -1,4 +1,5 @@
 import { generateUniqueId } from "@/app/_utils/generate-unique-id";
+import type { Type_Payload } from "@/informer";
 import { db } from "@/lib/db";
 import { analytics } from "@/schemas/analytics-schema";
 
@@ -9,12 +10,6 @@ type Type_Assets = {
   transferSize: number; // Bytes transferred over network
 };
 
-type Type_Payload = {
-  projectId: string;
-  totalTransferSize: number;
-  assets: Type_Assets[];
-};
-
 export async function POST(request: Request) {
   // Handle incoming informer data
   const data = (await request.json()) as Type_Payload;
@@ -22,7 +17,8 @@ export async function POST(request: Request) {
   // Connect to MongoDB and store the data
   await db.insert(analytics).values({
     id: generateUniqueId(),
-    projectID: data.projectId,
+    projectID: data.projectID,
+    htmlSize: data.htmlSize,
     totalTransferSize: data.totalTransferSize,
     assets: data.assets,
     createdAt: new Date(),

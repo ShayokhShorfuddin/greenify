@@ -3,6 +3,7 @@ import { integer, jsonb, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 export const analytics = pgTable("analytics", {
   id: text("id").primaryKey(),
   projectID: text("project_id").notNull(),
+  htmlSize: integer("html_size").notNull(),
   totalTransferSize: integer("total_transfer_size").notNull(),
   assets: jsonb("assets")
     .$type<
