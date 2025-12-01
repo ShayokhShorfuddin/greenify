@@ -2,35 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import close from "@/public/svgs/close.svg";
+import { useRef, useState } from "react";
 import menu from "@/public/svgs/menu.svg";
+import { HomeSidebar } from "./HomeSidebar";
 
 export default function Navbar() {
   // State to manage the visibility of the mobile menu
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const closeMenuButtonRef = useRef<HTMLButtonElement>(null);
-
-  // Close dropdown when user clicks outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        closeMenuButtonRef.current &&
-        !dropdownRef.current.contains(event.target as Node) &&
-        !closeMenuButtonRef.current.contains(event.target as Node)
-      ) {
-        setIsMenuOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const dropdownRef = useRef<HTMLElement>(null);
 
   return (
     <header>
@@ -54,71 +33,25 @@ export default function Navbar() {
             </li>
           </ul>
 
-          {isMenuOpen ? (
-            <button
-              type="button"
-              className="hover:cursor-pointer xs:hidden py-2 pl-2"
-              aria-label="Close menu"
-              onClick={() => {
-                setIsMenuOpen(false);
-              }}
-              ref={closeMenuButtonRef}
-            >
-              <Image src={close} alt="Close menu" className="size-4" />
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="hover:cursor-pointer xs:hidden py-2 pl-2"
-              aria-label="Open menu"
-              onClick={() => {
-                setIsMenuOpen(true);
-              }}
-            >
-              <Image src={menu} alt="Open menu" className="size-4" />
-            </button>
-          )}
+          <button
+            type="button"
+            className="hover:cursor-pointer xs:hidden py-2 pl-2"
+            aria-label="Open menu"
+            onClick={() => {
+              setIsMenuOpen(true);
+            }}
+          >
+            <Image src={menu} alt="Open menu" className="size-4" />
+          </button>
         </div>
 
-        {/* Mobile navigation dropdown */}
-        <div
-          className={`${isMenuOpen ? "block" : "hidden"} xs:hidden absolute top-12 right-0 mr-2 z-50`}
-          ref={dropdownRef}
-        >
-          <NavigationDropdown />
-        </div>
+        {/* Sidebar navigation for mobile */}
+        <HomeSidebar
+          isMenuOpen={isMenuOpen}
+          sidebarRef={dropdownRef}
+          setIsMenuOpen={setIsMenuOpen}
+        />
       </nav>
     </header>
-  );
-}
-
-// Navigation dropdown for mobile devices
-// TODO: Update the links and routes when routes have been created
-function NavigationDropdown() {
-  return (
-    <div className="bg-white border border-green-600 rounded-xl px-4 py-3 w-min">
-      <ul className="space-y-2.5">
-        <li>
-          <Link href="/">
-            <p className="text-sm text-nowrap">Home</p>
-          </Link>
-        </li>
-        <li>
-          <Link href="/">
-            <p className="text-sm text-nowrap">About</p>
-          </Link>
-        </li>
-        <li>
-          <Link href="/">
-            <p className="text-sm text-nowrap">Sponsor</p>
-          </Link>
-        </li>
-        <li>
-          <Link href="/calculations">
-            <p className="text-sm text-nowrap">Calculations</p>
-          </Link>
-        </li>
-      </ul>
-    </div>
   );
 }
