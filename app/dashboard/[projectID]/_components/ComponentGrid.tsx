@@ -72,3 +72,5 @@ export async function ComponentGrid({ projectID }: { projectID: string }) {
 }
 
 // TODO: Fix the errors on errors.txt
+// TODO We need a logout button in the sidebar
+// TODO Add PWA logos and icons

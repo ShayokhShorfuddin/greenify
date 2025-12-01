@@ -1,5 +1,5 @@
 import { generateUniqueId } from "@/app/_utils/generate-unique-id";
-import { getDB } from "@/lib/db";
+import { db } from "@/lib/db";
 import { analytics } from "@/schemas/analytics-schema";
 
 type Type_Assets = {
@@ -20,8 +20,6 @@ export async function POST(request: Request) {
   const data = (await request.json()) as Type_Payload;
 
   // Connect to MongoDB and store the data
-  const db = getDB();
-
   await db.insert(analytics).values({
     id: generateUniqueId(),
     projectID: data.projectId,

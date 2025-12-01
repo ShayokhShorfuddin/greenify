@@ -1,5 +1,8 @@
+import { eq } from "drizzle-orm";
 import { Suspense } from "react";
+import { db } from "@/lib/db";
 import logger from "@/logger";
+import { analytics } from "@/schemas/analytics-schema";
 import { BytesStatisticsContent } from "./BytesStatisticsContent";
 import { BytesStatisticsSkeleton } from "./BytesStatisticsSkeleton";
 
@@ -10,15 +13,13 @@ export async function BytesStatistics({ projectId }: { projectId: string }) {
   }[];
 
   try {
-    throw new Error("DB not connected");
-    // const db = getDB();
-    // analyticsData = await db
-    //   .select({
-    //     timestamp: analytics.createdAt,
-    //     totalBytesTransferred: analytics.totalTransferSize,
-    //   })
-    //   .from(analytics)
-    //   .where(eq(analytics.projectID, projectId));
+    analyticsData = await db
+      .select({
+        timestamp: analytics.createdAt,
+        totalBytesTransferred: analytics.totalTransferSize,
+      })
+      .from(analytics)
+      .where(eq(analytics.projectID, projectId));
   } catch (e) {
     // TODO call sentry here
     logger.error(

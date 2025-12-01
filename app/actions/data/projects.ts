@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { generateUniqueId } from "@/app/_utils/generate-unique-id";
 import { auth } from "@/lib/auth";
-import { getDB } from "@/lib/db";
+import { db } from "@/lib/db";
 import logger from "@/logger";
 import { project } from "@/schemas/project-schema";
 import type {
@@ -23,7 +23,6 @@ export async function addProject({
 }): Promise<Type_AddProjectResponse> {
   try {
     // Check if a project with the same URL already exists for this user
-    const db = getDB();
     const projectWithSameURL = await db.query.project.findFirst({
       where: eq(project.projectURL, projectURL),
     });
@@ -68,8 +67,6 @@ export async function addProject({
 // Get all project's names (useful for listing projects in the select project component)
 export async function getAllProjectNamesAndIDs(): Promise<Type_GetAllProjectNamesResponse> {
   try {
-    const db = getDB();
-
     const userID = await auth.api
       .getSession({
         headers: await headers(),
@@ -105,8 +102,6 @@ export async function getProjectByID({
   projectID: string;
 }): Promise<Type_GetProjectByIDResponse> {
   try {
-    const db = getDB();
-
     const projectData = await db.query.project.findFirst({
       where: eq(project.id, projectID),
     });
