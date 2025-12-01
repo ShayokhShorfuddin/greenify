@@ -1,5 +1,3 @@
-// TODO: Design UI for the dashboard page.
-
 import { Toaster } from "react-hot-toast";
 import { Heading } from "../../_components/Heading";
 import { ComponentGrid } from "./ComponentGrid";

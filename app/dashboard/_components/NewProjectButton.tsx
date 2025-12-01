@@ -110,9 +110,9 @@ function ModalContent({
       // TODO: Redirect to the new project's dashboard through the new project ID
       redirect(`/dashboard/${response.projectID}`);
 
-      // TODO: Should we allow subdomains? like abc.example.com and xyz.example.com as different projects? For now, let's not allow that. We can always change it later.
+      // TODO: Should we allow subdomains? like abc.example.com and xyz.example.com as different projects? Technically, our current implementation should not complain about it or break. We will test it out later.
 
-      //   Can multiple users monitor the same sites (example.com) under different accounts? Normally they can but since we will tell them to copy and paste our special script into their site, only the person who has access to the site can do that. The people don't have access to the site can't add our script tag, so they can only see the normal audits that don't require our script tag. So it's fine to allow multiple users to monitor the same site. Basically they will be missing out on the real-time features and graphs.
+      // TODO  Can multiple users monitor the same sites (example.com) under different accounts? Normally they can but since we will tell them to copy and paste our special script into their site, only the person who has access to the site can do that. The people don't have access to the site can't add our script tag, so they can only see the normal audits that don't require our script tag. So it's fine to allow multiple users to monitor the same site. Basically they will be missing out on the real-time features and graphs.
     },
   });
 

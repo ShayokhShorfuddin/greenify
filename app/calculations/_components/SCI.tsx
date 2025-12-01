@@ -218,5 +218,3 @@ const parameters = [
       "The thing that makes this standard a rate. This should be how your software scales—for example, per user per device or per API call or maybe per Raspberry Pi device.",
   },
 ];
-
-// TODO: We after finishing the KIMI curated equations of the "Building Green Software" book, we ourselves will scheme through it manually to see if there are any other equations we can add.

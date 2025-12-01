@@ -1,23 +1,44 @@
+import Image from "next/image";
 import { CarbonTxtCard } from "@/app/_components/_audit-components/_audit1/CarbonTxtCard";
 import { GreenHostCard } from "@/app/_components/_audit-components/_audit2/GreenHostCard";
 import { IPToCo2IntensityCard } from "@/app/_components/_audit-components/_audit3/IPToCo2IntensityCard";
 import { PingResponseTimeCard } from "@/app/_components/_info-components/_info1/PingResponseTimeCard";
 import { BytesStatistics } from "@/app/_components/_info-components/_info2/BytesStatistics";
 import { getProjectByID } from "@/app/actions/data/projects";
+import connection_lost from "@/public/svgs/connection-lost.svg";
 
 // Container of all dashboard components
 export async function ComponentGrid({ projectID }: { projectID: string }) {
   const response = await getProjectByID({ projectID });
 
   if (response.errorOccurred) {
-    // TODO: Style it later
-    return <p>Unable to load project data.</p>;
+    return (
+      <div className="flex flex-col items-center mt-12 px-4">
+        <Image
+          src={connection_lost}
+          alt="Unable to load project data."
+          className="h-24 sm:h-26 md:h-28 lg:h-32"
+        />
+
+        <p className="text-red-500 mt-8">Failed to load project data.</p>
+        <p className="text-sm">Try again after some time.</p>
+      </div>
+    );
   }
 
   if (response.notFound) {
-    // TODO: Style it later
-    // Go to this to design it localhost:3001/dashboard/6921144fa4a24de722819463
-    return <p>Project not found.</p>;
+    return (
+      <div className="flex flex-col items-center mt-12 px-4">
+        <Image
+          src={connection_lost}
+          alt="Unable to find this project."
+          className="h-24 sm:h-26 md:h-28 lg:h-32"
+        />
+
+        <p className="text-red-500 mt-8">Unable to find this project.</p>
+        <p className="text-sm">Is the project ID correct?</p>
+      </div>
+    );
   }
 
   const { project } = response;
@@ -27,7 +48,7 @@ export async function ComponentGrid({ projectID }: { projectID: string }) {
       <p>{project.name}</p>
       <p>{project.url}</p>
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-rows-1 gap-5 mt-8 px-[1.2rem] font-sans">
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-rows-1 gap-5 my-8 px-[1.2rem] font-sans">
         <CarbonTxtCard url={project.url} />
         <GreenHostCard url={project.url} />
         <IPToCo2IntensityCard url={project.url} />
